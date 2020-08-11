@@ -7,6 +7,7 @@ import Div from '../../components/Div'
 // import { toast } from 'react-toastify'
 
 import { PatientForm, FractureRegister } from './components'
+import PatientRegister from "./components/PatientRegister/PatientRegister";
 
 
 
@@ -20,10 +21,11 @@ const CreateForm = (props) => {
   const patient = {
 
   }
+
   return (
     <Div>
       <Paper>
-        <PatientForm values={patient}/>
+        <PatientRegister />
         <FractureRegister />
       </Paper>
     </Div>

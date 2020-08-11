@@ -9,6 +9,7 @@ import propsToValuesMap from './propsMap'
 
 
 const handleSubmit = (values, { props }) => {
+  window.alert('fratura salva!')
   // window.alert('Not implemented!')
   // const valuesToSubmit = { ...values, action: props.docAction }
   // props.savePgiDocument(createPgiJSON(valuesToSubmit))
