@@ -8,14 +8,24 @@ import Div from '../../components/Div'
 
 import { PatientForm, FractureRegister } from './components'
 import PatientRegister from "./components/PatientRegister/PatientRegister";
+import {makeStyles} from "@material-ui/styles";
 
 
 
 
-
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(3)
+  },
+  content: {
+    marginTop: theme.spacing(2)
+  }
+}));
 
 
 const CreateForm = (props) => {
+
+  const classes = useStyles();
 
   // const {patient} = props
   const patient = {
@@ -23,12 +33,12 @@ const CreateForm = (props) => {
   }
 
   return (
-    <Div>
+    <div className={classes.root}>
       <Paper>
         <PatientRegister />
         <FractureRegister />
       </Paper>
-    </Div>
+    </div>
   )
 }
 

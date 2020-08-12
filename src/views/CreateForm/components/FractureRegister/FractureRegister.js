@@ -17,8 +17,17 @@ import Grid from "@material-ui/core/Grid";
 const classes = {
   selectedColor: {},
   table: {},
-  tableWrapper: {},
-  button: {}
+  tableWrapper: {
+    maxHeight: 256,
+    overflow: 'auto',
+    width: '100%'
+},
+  button: {},
+  root: {
+    display: 'flex',
+    flexGrow: 1,
+    padding: 16
+  }
 }
 
 const FractureRegister = (props) => {
@@ -92,11 +101,15 @@ const FractureRegister = (props) => {
   };
 
   return (
-    <CeosExpansionPanel title={'Dados da Fratura'} name={'fracture'}>
-      <Typography variant={'h4'} style={{ marginBottom: '1vh' }}>
-        Fraturas
-      </Typography>
-      <Paper>
+    <CeosExpansionPanel title={'Fraturas'} name={'fracture'}>
+      <Grid
+        item
+        lg={8}
+        md={12}
+        xl={12}
+        xs={12}
+      >
+      <Paper style={{marginBottom: 30}}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} size="small" stickyHeader>
             <TableHead>
@@ -112,6 +125,10 @@ const FractureRegister = (props) => {
             </TableBody>
           </Table>
         </div>
+
+        <div style={{ width: '100%', textAlign: 'center', margin: '1vh' }}>
+        </div>
+
         <CeosButton
           color={'primary'}
           // disabled={_.isEmpty(installation) || isDisableFields || loadingPgi || isLoading}
@@ -122,9 +139,12 @@ const FractureRegister = (props) => {
         />
       </Paper>
 
+      {showPortal ? <Portal container={container.current}> {renderFractureForm(selectedId)} </Portal> : null}
       <div ref={container}>
       </div>
-      {showPortal ? <Portal container={container.current}> {renderFractureForm(selectedId)} </Portal> : null}
+
+      </Grid>
+      {/*</div>*/}
     </CeosExpansionPanel>
   )
 };

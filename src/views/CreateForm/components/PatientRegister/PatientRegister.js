@@ -31,9 +31,6 @@ const FractureRegister = (props) => {
 
   return (
     <CeosExpansionPanel title={'Dados do Paciente'} name={'patient'}>
-      {/*<Typography variant={'h4'} style={{ marginBottom: '1vh' }}>*/}
-      {/*  Dados do Paciente*/}
-      {/*</Typography>*/}
       <Paper>
         <PatientForm
           values={patient}
