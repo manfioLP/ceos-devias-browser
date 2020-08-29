@@ -141,7 +141,7 @@ export default function IntegrationReactSelect(props) {
   } = props
 
   // TODO: get options from a file instead of props
-  const options = ['opcao1', 'opcao2', 'opcao3'];
+  const options = ['opcao1', 'opcao2', 'opcao3', 'Outro'];
 
   const suggestions = () => {
     const list = [
