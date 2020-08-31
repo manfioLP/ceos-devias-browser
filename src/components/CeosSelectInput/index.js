@@ -4,6 +4,7 @@ import * as _ from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
 import { MenuItem, Paper, Typography } from '@material-ui/core'
 import CeosInput from '../CeosInput'
+import getOptionsToDisplay from "./utils/getOptionsToDisplay";
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -141,7 +142,8 @@ export default function IntegrationReactSelect(props) {
   } = props
 
   // TODO: get options from a file instead of props
-  const options = ['opcao1', 'opcao2', 'opcao3', 'Outro'];
+  const options = getOptionsToDisplay(id);
+  // const options = ['opcao1', 'opcao2', 'opcao3', 'Outro'];
 
   const suggestions = () => {
     const list = [
