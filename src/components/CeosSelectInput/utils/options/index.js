@@ -8,6 +8,7 @@ import mechanism from './fractures/mechanism'
 import region from './fractures/region'
 
 import city from './patients/city'
+import gender from './patients/gender'
 import weekday from './patients/weekday'
 import education from './patients/education'
 import profession from './patients/profession'
@@ -25,6 +26,7 @@ export default {
   region,
 
   city,
+  gender,
   weekday,
   education,
   profession,
