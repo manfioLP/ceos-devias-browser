@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
@@ -33,15 +33,49 @@ const useStyles = makeStyles(theme => ({
 const PatientForm = props => {
   // todo: add other props
   // todo: add formik
-  const { className, values, handleChange, setFieldValue, handleSubmit, ...rest } = props;
+  const {
+    className,
+    values,
+    handleChange,
+    setFieldValue,
+    handleSubmit,
+    patient,
+    addPatient,
+    ...rest } = props;
 
   const classes = useStyles();
 
-  // BANCO PACIENTE
-  // Data (em numeral): digitar (xx/xx/xxxx)
-  // Dia da semana:seg/terça/quarta/quinta/sexta/sab/domingo
-  // Mês: jan/fevereiro/março/abril/maio/junho/julho/agosto/set/out/nov
-  // Lesões associadas ao trauma: fratura fechada (opção de digitar qual osso)/lesão abdominal/lesão torácica/lesão cranioencefálica/lesão bucomaxilo/lesão cutânea/outro -> nisso aq tem q ter uma opção q de p assinalar mais de uma opção
+  const [showCityOther, setShowCityOther] = useState(false);
+  const [showCivilStatusOther, setShowCivilStatusOther] = useState(false);
+  const [showProfessionOther, setShowProfessionOther] = useState(false);
+
+  useEffect( () => {
+    const compareString = values.city ? values.city.slice(4, values.city.length) : ''
+    if (compareString === 'Outro') {
+      setShowCityOther(true)
+    } else {
+      setShowCityOther(false)
+    }
+  }, [values.city]);
+
+  useEffect( () => {
+    const compareString = values.civilStatus ? values.civilStatus.slice(4, values.civilStatus.length) : ''
+    if (compareString === 'Outro') {
+      setShowCivilStatusOther(true)
+    } else {
+      setShowCivilStatusOther(false)
+    }
+  }, [values.civilStatus]);
+
+  useEffect( () => {
+    const compareString = values.profession ? values.profession.slice(4, values.profession.length) : ''
+
+    if (compareString === 'Outro') {
+      setShowProfessionOther(true)
+    } else {
+      setShowProfessionOther(false)
+    }
+  }, [values.profession]);
 
   const [boolState, setBoolState] = React.useState({
     educationCompleted: false,
@@ -58,18 +92,13 @@ const PatientForm = props => {
     setFieldValue(name, switchValue)
     setBoolState({ ...boolState, [name]: switchValue })
   }
-  // Etilista: sim/não
-  // Comorbidades: sim/não
-  // Diabetes : sim/não
-  // Hipertensão arterial: sim/não
-  // Tabagista: sim/não
-  // Infecção: sim/não
-  // Amputação: sim/não
+
+  // TODO: add dates
   return (
     <Paper>
       <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosInput
                 id="recordNumber"
                 name="recordNumber"
@@ -79,7 +108,7 @@ const PatientForm = props => {
                 label="Numero de Prontuario"
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <CeosInput
                 id="name"
                 name="name"
@@ -89,7 +118,7 @@ const PatientForm = props => {
                 label="Nome"
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosInput
                 id="age"
                 name="age"
@@ -97,6 +126,80 @@ const PatientForm = props => {
                 // onblur={handleBur}
                 value={values.age}
                 label="Idade"
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosSelectInput
+                id="gender"
+                name="gender"
+                toShow="gender"
+                value={values.gender}
+                label="Sexo"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosSelectInput
+                id="profession"
+                name="profession"
+                toShow={'profession'}
+                // onblur={handleBur}
+                handleChange={handleChange}
+                value={values.profession}
+                label="Profissao"
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosInput
+                id="professionOther"
+                name="professionOther"
+                toshow="professionOther"
+                value={values.profession}
+                label="Outro"
+                value={showProfessionOther ? `${values.professionOther ? values.professionOther : ''}` : null}
+                disabled={!showProfessionOther}
+                label="Outro"/>
+            </Grid>
+            <Grid item xs={3}>
+              <CeosSelectInput
+                id="civilStatus"
+                name="civilStatus"
+                toShow="civilStatus"
+                value={values.civilStatus}
+                label="Estado Civil"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosInput
+                id="civilStatusOther"
+                name="civilStatusOther"
+                toshow="civilStatusOther"
+                value={values.civilStatus}
+                label="Outro"
+                // handleChange={handleChange}
+                value={showCivilStatusOther ? `${values.civilStatusOther ? values.civilStatusOther : ''}` : null}
+                disabled={!showCivilStatusOther}
+                label="Outro"/>
+            </Grid>
+            <Grid item xs={3}>
+              <CeosSelectInput
+                id="education"
+                name="education"
+                toShow="education"
+                value={values.education}
+                label="Escolaridade"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosInput
+                id="exposureTime"
+                name="exposureTime"
+                toShow={'exposureTime'}
+                // onblur={handleBur}
+                value={values.exposureTime}
+                label="Tempo de Exposição"
               />
             </Grid>
             <Grid item xs={3}>
@@ -119,17 +222,29 @@ const PatientForm = props => {
                 label="Tempo Médio de Internação"
               />
             </Grid>
-            <Grid item xs={3}>
-              <CeosInput
-                id="exposureTime"
-                name="exposureTime"
-                toShow={'exposureTime'}
-                // onblur={handleBur}
-                value={values.exposureTime}
-                label="Tempo de Exposição"
+            <Grid item xs={4}>
+              <CeosSelectInput
+                id="city"
+                name="city"
+                toShow="city"
+                value={values.city}
+                label="Procedencia"
+                handleChange={handleChange}
               />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={3}>
+              <CeosInput
+                id="cityOther"
+                name="cityOther"
+                toshow="cityOther"
+                value={values.city}
+                label="Outro"
+                // handleChange={handleChange}
+                value={showCityOther ? `${values.cityOther ? values.cityOther : ''}` : null}
+                disabled={!showCityOther}
+                label="Outro"/>
+            </Grid>
+            <Grid item xs={4}>
               <CeosInput
                 id="antibiotic"
                 name="antibiotic"
@@ -147,56 +262,6 @@ const PatientForm = props => {
                 // onblur={handleBur}
                 value={values.comorbities}
                 label="Comorbidades"
-              />
-            </Grid>
-            <Grid item xs={5}>
-              <CeosInput
-                id="profession"
-                name="profession"
-                toShow={'profession'}
-                // onblur={handleBur}
-                value={values.profession}
-                label="Profissao"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <CeosSelectInput
-                id="gender"
-                name="gender"
-                toShow="gender"
-                value={values.gender}
-                label="Sexo"
-                handleChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <CeosSelectInput
-                id="city"
-                name="city"
-                toShow="city"
-                value={values.city}
-                label="Procedencia"
-                handleChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <CeosSelectInput
-                id="degreeLevel"
-                name="degreeLevel"
-                toShow="degreeLevel"
-                value={values.degreeLevel}
-                label="Escolaridade"
-                handleChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <CeosSelectInput
-                id="civilStatus"
-                name="civilStatus"
-                toShow="civilStatus"
-                value={values.civilStatus}
-                label="Estado Civil"
-                handleChange={handleChange}
               />
             </Grid>
             <Grid item xs={2} className={classes.checkboxView}>
@@ -325,7 +390,7 @@ const PatientForm = props => {
               // className={classes.buttonSuccess}
               type={'submit'}
               label={'Salvar Paciente'}
-              onClick={() => toast.success('Paciente adicionado!')}
+              onClick={() => console.log('Pacient added!', values)}
               // disabled={isDisableFields}
             />
           </Grid>

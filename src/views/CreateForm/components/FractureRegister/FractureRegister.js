@@ -1,19 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableRow }from '@material-ui/core/index'
 import * as _ from 'lodash'
 
-// import Badge from '@material-ui/core/Badge'
+import Badge from '@material-ui/core/Badge'
 import Paper from '@material-ui/core/Paper/index'
 import Typography from '@material-ui/core/Typography/index'
 import Portal from '@material-ui/core/Portal/index'
+import Grid from "@material-ui/core/Grid";
+
 
 import FractureForm from '../FractureForm'
+import { FractureContext } from "../../../../contexts/Fracture";
 
 import CeosButton from '../../../../components/CeosButton'
 import CeosExpansionPanel from '../../../../components/CeosExpansionPanel'
-import Grid from "@material-ui/core/Grid";
-
 // TODO: use classes
+
 const classes = {
   selectedColor: {},
   table: {},
@@ -31,11 +33,14 @@ const classes = {
 }
 
 const FractureRegister = (props) => {
-  const [selectedId, setSelectedId] = useState(null);
-  const [rows, setRows] = useState([]);
+  const {selected, contextRows} = useContext(FractureContext);
+// const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = selected;
+  // const [rows, setRows] = useState([]);
+  const [rows, setRows] = contextRows;
+
   const [showPortal, setShowPortal] = useState(false);
   const container = React.useRef(null);
-
 
   // todo: retrieve info from props here
   const {
@@ -49,7 +54,22 @@ const FractureRegister = (props) => {
   }, [fractures]);
 
   const newFracture = () => {
+    const newRows = rows;
+    newRows.push({
+      description: '',
+      region: '',
+      bone: '',
+      limb: '',
+      mechanism: '',
+      associatedTraumaInjury: '',
+      firstSurgicalApproach: '',
+      gustillo: '',
+      ao: ''
+    })
 
+    setRows(newRows)
+    setSelectedId(newRows.length - 1)
+    // setShowPortal(true)
   };
 
   const showPortalFunc = index => {
@@ -87,6 +107,8 @@ const FractureRegister = (props) => {
 
   const renderFractureForm = index => {
     const fracture = rows[index]
+    console.log(index)
+    console.log('fracture...', fracture)
 
     // if ((isLoading || _.isNil(equipment)) && !_.isEmpty(unidadeDeMedida)) {
     //   return <Loading />
@@ -94,8 +116,8 @@ const FractureRegister = (props) => {
 
     return (
       <FractureForm
-        fracture={fracture}
-        setSelectedId={setSelectedId}
+        {...fracture}
+        // setSelectedId={setSelectedId}
       />
     )
   };
@@ -109,7 +131,8 @@ const FractureRegister = (props) => {
         xl={12}
         xs={12}
       >
-      <Paper style={{marginBottom: 30}}>
+        <Badge badgeContent={rows.length} color="error" />
+        <Paper style={{marginBottom: 30}}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} size="small" stickyHeader>
             <TableHead>
@@ -134,7 +157,10 @@ const FractureRegister = (props) => {
           // disabled={_.isEmpty(installation) || isDisableFields || loadingPgi || isLoading}
           variant={'outlined'}
           className={classes.button}
-          onClick={()=> setShowPortal(true)}
+          onClick={()=> {
+            newFracture();
+            setShowPortal(true);
+          }}
           label='Nova Fratura'
         />
       </Paper>

@@ -23,17 +23,19 @@ const FractureForm = props => {
     handleChange,
     handleSubmit,
     handleBlur,
-
     setFieldValue
   } = props
 
   // const handleSubmit = () => {
   //   window.alert('not implemented!')
   // }
+  console.log('values...', values)
 
-  const [showMechanismOther, setShowMechanismOther] = useState(!values.mechanism && values.mechanism === 'Outro')
-  const [showLimbOther, setShowLimbOther] = useState(!values.limb && values.limb === 'Outro')
-  const [showBoneOther, setShowBoneOther] = useState(!values.bone && values.bone === 'Outro')
+  const [showMechanismOther, setShowMechanismOther] = useState(!values.mechanism && values.mechanism === 'Outro');
+  const [showLimbOther, setShowLimbOther] = useState(!values.limb && values.limb === 'Outro');
+  const [showBoneOther, setShowBoneOther] = useState(!values.bone && values.bone === 'Outro');
+  const [showTraumaInjuryOther, setShowTraumaInjuryOther] = useState(!values.associatedTraumaInjury && values.associatedTraumaInjury === 'Outro');
+  const [showSurgicalApproachOther, setShowSurgicalApproachOther] = useState(!values.firstSurgicalApproach && values.firstSurgicalApproach === 'Outro');
 
   useEffect( () => {
     if (values.mechanism === 'Outro') {
@@ -59,42 +61,22 @@ const FractureForm = props => {
     }
   }, [values.bone])
 
-  // verify lesoes associadas ao trauma
-  // useEffect( () => {
-  //   if (values.limb === 'Outro') {
-  //     setShowLimbOther(true)
-  //   } else {
-  //     setShowLimbOther(false)
-  //   }
-  // }, [values.limb])
-  //
-  // useEffect( () => {
-  //   if (values.limb === 'Outro') {
-  //     setShowLimbOther(true)
-  //   } else {
-  //     setShowLimbOther(false)
-  //   }
-  // }, [values.limb])
+  useEffect( () => {
+    if (values.associatedTraumaInjury === 'Outro') {
+      setShowTraumaInjuryOther(true)
+    } else {
+      setShowTraumaInjuryOther(false)
+    }
+  }, [values.associatedTraumaInjury])
 
-  // let showMechanismOther = !values.mechanism && values.mechanism === 'opcao3'
-  // console.log(showMechanismOther)
+  useEffect( () => {
+    if (values.firstSurgicalApproach === 'Outro') {
+      setShowSurgicalApproachOther(true)
+    } else {
+      setShowSurgicalApproachOther(false)
+    }
+  }, [values.firstSurgicalApproach])
 
-
-  // Descrição censo: digitar
-  // Osso acometido
-  // Mecanismo
-  // Região topográfica
-  // Membro acometido
-  // Classificação ao
-  // Classificação gustillo
-  // Numero de fraturas expostas
-  // Lesões associadas diretamente ao trauma
-  // Primeira abordagem Cirurgica
-  // Amputação
-
-  // TODO: Add multiple select to firstSurgicalApproach and associatedTraumaInjury
-  // TODO: Add boolean checkbox for amputation
-  // todo: add <form>
   return (
     <Paper>
       <Typography variant={'h4'}>Informação da Fratura</Typography>
@@ -104,17 +86,27 @@ const FractureForm = props => {
             <CeosInput
               id="description"
               name="description"
-              toShow={'description'}
+              toshow={'description'}
               // onBlur={handleBlur}
               value={values.census}
               label="Descrição Censo"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <CeosSelectInput
+              id="region"
+              name="region"
+              toshow="region"
+              value={values.region}
+              label="Região topográfica"
+              handleChange={handleChange}
             />
           </Grid>
           <Grid item xs={3}>
             <CeosSelectInput
               id="bone"
               name="bone"
-              toShow={'bone'}
+              toshow={'bone'}
               onBlur={handleBlur}
               value={values.bone}
               label="Osso Acometido"
@@ -125,51 +117,41 @@ const FractureForm = props => {
             <CeosInput
               id="boneOther"
               name="boneOther"
-              toShow="boneOther"
+              toshow="boneOther"
               value={values.bone}
               label="Outro"
-              handleChange={handleChange}
+              // handleChange={handleChange}
               value={showBoneOther ? `${values.boneOther ? values.boneOther : ''}` : null}
               disabled={!showBoneOther}
               label="Outro"/>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <CeosSelectInput
               id="mechanism"
               name="mechanism"
-              toShow="mechanism"
+              toshow="mechanism"
               value={values.mechanism}
               label="Mecanismo"
               handleChange={handleChange}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <CeosInput
               id="mechanismOther"
               name="mechanismOther"
-              toShow="mechanismOther"
+              toshow="mechanismOther"
               value={values.mechanism}
               label="Outro"
-              handleChange={handleChange}
+              // handleChange={handleChange}
               value={showMechanismOther ? `${values.mechanismOther ? values.mechanismOther : ''}` : null}
               disabled={!showMechanismOther}
             />
           </Grid>
-          <Grid item xs={4}>
-            <CeosSelectInput
-              id="region"
-              name="region"
-              toShow="region"
-              value={values.region}
-              label="Região topográfica"
-              handleChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <CeosSelectInput
               id="limb"
               name="limb"
-              toShow="limb"
+              toshow="limb"
               value={values.limb}
               label="Membro acometido"
               handleChange={handleChange}
@@ -179,60 +161,89 @@ const FractureForm = props => {
             <CeosInput
               id="limbOther"
               name="limbOther"
-              toShow="limbOther"
+              toshow="limbOther"
               value={values.limb}
               label="Outro"
-              handleChange={handleChange}
+              // handleChange={handleChange}
               value={showLimbOther ? `${values.limbOther ? values.limbOther : ''}` : null}
               disabled={!showLimbOther}
               label="Outro"/>
           </Grid>
           <Grid item xs={3}>
             <CeosSelectInput
-              id="ao"
-              name="ao"
-              toShow="ao"
-              value={values.ao}
-              label="Classificação ao"
-              handleChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <CeosSelectInput
-              id="gustillo"
-              name="gustillo"
-              toShow="gustillo"
-              value={values.gustillo}
-              label="Classificação Gustillo"
-              handleChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <CeosSelectInput
               id="associatedTraumaInjury"
               name="associatedTraumaInjury"
-              toShow="associatedTraumaInjury"
+              toshow="associatedTraumaInjury"
               value={values.associatedTraumaInjury}
-              label="Lesões associadas diretamente ao trauma"
+              label="Lesões associadas diretamente a fratura exposta"
               handleChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <CeosSelectInput
+              id="associatedTraumaInjuryOther"
+              name="associatedTraumaInjuryOther"
+              toshow="associatedTraumaInjuryOther"
+              value={values.associatedTraumaInjury}
+              label="Lesões associadas diretamente a fratura exposta"
+              handleChange={handleChange}
+              value={showTraumaInjuryOther ? `${values.associatedTraumaInjuryOther ? values.associatedTraumaInjuryOther : ''}` : null}
+              disabled={!showTraumaInjuryOther}
             />
           </Grid>
           <Grid item xs={4}>
             <CeosSelectInput
               id="firstSurgicalApproach"
               name="firstSurgicalApproach"
-              toShow="firstSurgicalApproach"
+              toshow="firstSurgicalApproach"
               value={values.firstSurgicalApproach}
               label="Primeira abordagem Cirurgica"
+              handleChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <CeosInput
+              id="firstSurgicalApproachOther"
+              name="firstSurgicalApproachOther"
+              toshow="firstSurgicalApproachOther"
+              value={values.firstSurgicalApproach}
+              label="Outro"
+              // handleChange={handleChange}
+              value={showSurgicalApproachOther ? `${values.firstSurgicalApproachOther ? values.firstSurgicalApproachOther : ''}` : null}
+              disabled={!showSurgicalApproachOther}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <CeosSelectInput
+              id="gustillo"
+              name="gustillo"
+              toshow="gustillo"
+              value={values.gustillo}
+              label="Classificação Gustillo"
+              handleChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <CeosSelectInput
+              id="ao"
+              name="ao"
+              toshow="ao"
+              value={values.ao}
+              label="Classificação ao"
               handleChange={handleChange}
             />
           </Grid>
           <CeosButton
             variant="contained"
             // className={classes.buttonSuccess}
-            type={'submit'}
+            // type={'submit'}
             label={'Salvar'}
-            onClick={() => toast.success('Fratura adicionada!')}
+            onClick={() => {
+              // newFracture();
+              window.alert('salvo no forms')
+              console.log('values...', values)
+            }
+            }
             // disabled={isDisableFields}
           />
         </Grid>

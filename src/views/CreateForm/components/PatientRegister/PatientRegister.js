@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect, useRef, useContext} from 'react'
 import { Table, TableBody, TableCell, TableHead, TableRow }from '@material-ui/core/index'
 import * as _ from 'lodash'
 
@@ -13,6 +13,9 @@ import CeosButton from '../../../../components/CeosButton'
 import CeosExpansionPanel from '../../../../components/CeosExpansionPanel'
 import Grid from "@material-ui/core/Grid";
 
+import { PatientContext } from "../../../../contexts/Patient";
+
+
 // TODO: use classes
 const classes = {
   selectedColor: {},
@@ -21,19 +24,20 @@ const classes = {
   button: {}
 }
 
-const FractureRegister = (props) => {
+const PatientRegister = (props) => {
 
   // todo: retrieve info from props here
-  const {
-    patient
-  } = props;
+  const {patientState, addPatient} = useContext(PatientContext)
+  const [patient, setPatient] = patientState;
 
 
   return (
     <CeosExpansionPanel title={'Dados do Paciente'} name={'patient'}>
       <Paper>
         <PatientForm
-          values={patient}
+          {...props}
+          patient={patient}
+          addPatient={addPatient}
         />
 
       </Paper>
@@ -42,5 +46,5 @@ const FractureRegister = (props) => {
   )
 };
 
-export default FractureRegister
+export default PatientRegister
 // export default withStyles(styles)(FractureRegister)

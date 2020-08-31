@@ -10,7 +10,7 @@ const propsToValuesMap = () => ({
         profession: null,
         gender: null,
         city: null,
-        degreeLevel: null,
+        education: null,
 })
 
 export default propsToValuesMap

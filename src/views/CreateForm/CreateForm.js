@@ -10,7 +10,10 @@ import { PatientForm, FractureRegister } from './components'
 import PatientRegister from "./components/PatientRegister/PatientRegister";
 import {makeStyles} from "@material-ui/styles";
 
+import { FractureProvider } from "../../contexts/Fracture";
+import { PatientContext } from "../../contexts/Patient";
 
+import CeosButton from "../../components/CeosButton";
 
 
 const useStyles = makeStyles(theme => ({
@@ -28,15 +31,17 @@ const CreateForm = (props) => {
   const classes = useStyles();
 
   // const {patient} = props
-  const patient = {
-
-  }
+  const {patientState} = useContext(PatientContext);
+  const [patient, setPatient] = patientState
 
   return (
     <div className={classes.root}>
       <Paper>
-        <PatientRegister />
-        <FractureRegister />
+        <PatientRegister/>
+        <FractureProvider>
+          {patient.id && <FractureRegister />}
+          {/*<FractureRegister />*/}
+        </FractureProvider>
       </Paper>
     </div>
   )
