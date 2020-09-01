@@ -13,11 +13,11 @@ export default [
   },
   {
     opt: 4,
-    value: 'Funcamental completo'
+    value: 'Fundamental completo'
   },
   {
     opt: 5,
-    value: 'Funcamental incompleto'
+    value: 'Fundamental incompleto'
   },
   {
     opt: 6,
