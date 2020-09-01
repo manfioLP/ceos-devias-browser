@@ -106,6 +106,7 @@ const PatientForm = props => {
                 // onblur={handleBur}
                 value={values.recordNumber}
                 label="Numero de Prontuario"
+                onChange={setFieldValue}
               />
             </Grid>
             <Grid item xs={4}>
@@ -116,6 +117,7 @@ const PatientForm = props => {
                 // onblur={handleBur}
                 value={values.name}
                 label="Nome"
+                onChange={setFieldValue}
               />
             </Grid>
             <Grid item xs={2}>
@@ -126,6 +128,7 @@ const PatientForm = props => {
                 // onblur={handleBur}
                 value={values.age}
                 label="Idade"
+                handleChange={handleChange}
               />
             </Grid>
             <Grid item xs={3}>
@@ -159,6 +162,7 @@ const PatientForm = props => {
                 value={showProfessionOther ? `${values.professionOther ? values.professionOther : ''}` : null}
                 disabled={!showProfessionOther}
                 label="Outro"/>
+
             </Grid>
             <Grid item xs={3}>
               <CeosSelectInput

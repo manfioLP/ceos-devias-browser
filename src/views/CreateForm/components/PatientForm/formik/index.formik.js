@@ -22,9 +22,9 @@ const handleSubmit = (values, {props}) => {
     antibiotic: values.antibiotic,
     comorbidities: values.comorbidities,
     profession: values.profession,
-    gender: values.gender,
+    gender: values.gender.slice(4, values.gender.length),
     city: values.city,
-    degreeLevel: values.degreeLevel,
+    education: values.degreeLevel,
   })
   // window.alert('Not implemented!')
   // const valuesToSubmit = { ...values, action: props.docAction }
