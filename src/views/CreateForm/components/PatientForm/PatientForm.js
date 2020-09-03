@@ -48,6 +48,7 @@ const PatientForm = props => {
   const [showCityOther, setShowCityOther] = useState(false);
   const [showCivilStatusOther, setShowCivilStatusOther] = useState(false);
   const [showProfessionOther, setShowProfessionOther] = useState(false);
+  const [showAssociatedTraumaInjuryOther, setShowAssociatedTraumaInjuryOther] = useState(false);
 
   useEffect( () => {
     const compareString = values.city ? values.city.slice(4, values.city.length) : ''
@@ -76,6 +77,16 @@ const PatientForm = props => {
       setShowProfessionOther(false)
     }
   }, [values.profession]);
+
+  useEffect( () => {
+    const compareString = values.associatedTraumaInjury ? values.associatedTraumaInjury.slice(4, values.associatedTraumaInjury.length) : ''
+
+    if (compareString === 'Outro') {
+      setShowAssociatedTraumaInjuryOther(true)
+    } else {
+      setShowAssociatedTraumaInjuryOther(false)
+    }
+  }, [values.associatedTraumaInjury]);
 
   const [boolState, setBoolState] = React.useState({
     educationCompleted: false,
@@ -125,10 +136,9 @@ const PatientForm = props => {
                 id="age"
                 name="age"
                 toShow={'age'}
-                // onblur={handleBur}
                 value={values.age}
                 label="Idade"
-                handleChange={handleChange}
+                onChange={setFieldValue}
               />
             </Grid>
             <Grid item xs={3}>
@@ -161,8 +171,9 @@ const PatientForm = props => {
                 label="Outro"
                 value={showProfessionOther ? `${values.professionOther ? values.professionOther : ''}` : null}
                 disabled={!showProfessionOther}
-                label="Outro"/>
-
+                label="Outro"
+                onChange={setFieldValue}
+              />
             </Grid>
             <Grid item xs={3}>
               <CeosSelectInput
@@ -181,10 +192,59 @@ const PatientForm = props => {
                 toshow="civilStatusOther"
                 value={values.civilStatus}
                 label="Outro"
-                // handleChange={handleChange}
                 value={showCivilStatusOther ? `${values.civilStatusOther ? values.civilStatusOther : ''}` : null}
                 disabled={!showCivilStatusOther}
-                label="Outro"/>
+                label="Outro"
+                onChange={setFieldValue}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosSelectInput
+                id="city"
+                name="city"
+                toShow="city"
+                value={values.city}
+                label="Procedencia"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosInput
+                id="cityOther"
+                name="cityOther"
+                toshow="cityOther"
+                value={values.city}
+                label="Outro"
+                value={showCityOther ? `${values.cityOther ? values.cityOther : ''}` : null}
+                disabled={!showCityOther}
+                onChange={setFieldValue}
+                label="Outro"
+                onChange={setFieldValue}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosSelectInput
+                id="associatedTraumaInjury"
+                name="associatedTraumaInjury"
+                toShow="associatedTraumaInjury"
+                value={values.city}
+                label="Lesões associadas ao trauma"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosInput
+                id="associatedTraumaInjuryOther"
+                name="associatedTraumaInjuryOther"
+                toshow="associatedTraumaInjuryOther"
+                value={values.associatedTraumaInjury}
+                label="Outro"
+                value={showAssociatedTraumaInjuryOther ? `${values.associatedTraumaInjuryOther ? values.associatedTraumaInjuryOther : ''}` : null}
+                disabled={!showAssociatedTraumaInjuryOther}
+                onChange={setFieldValue}
+                label="Outro"
+                onChange={setFieldValue}
+              />
             </Grid>
             <Grid item xs={3}>
               <CeosSelectInput
@@ -204,6 +264,7 @@ const PatientForm = props => {
                 // onblur={handleBur}
                 value={values.exposureTime}
                 label="Tempo de Exposição"
+                onChange={setFieldValue}
               />
             </Grid>
             <Grid item xs={3}>
@@ -214,73 +275,28 @@ const PatientForm = props => {
                 // onblur={handleBur}
                 value={values.hour}
                 label="Horário de admissão"
+                onChange={setFieldValue}
               />
             </Grid>
             <Grid item xs={3}>
               <CeosInput
-                id="time"
-                name="time"
-                toShow={'time'}
+                id="hospitalizationAverageTime"
+                name="hospitalizationAverageTime"
+                toShow={'hospitalizationAverageTime'}
                 // onblur={handleBur}
-                value={values.time}
+                value={values.hospitalizationAverageTime}
                 label="Tempo Médio de Internação"
+                onChange={setFieldValue}
               />
-            </Grid>
-            <Grid item xs={4}>
-              <CeosSelectInput
-                id="city"
-                name="city"
-                toShow="city"
-                value={values.city}
-                label="Procedencia"
-                handleChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <CeosInput
-                id="cityOther"
-                name="cityOther"
-                toshow="cityOther"
-                value={values.city}
-                label="Outro"
-                // handleChange={handleChange}
-                value={showCityOther ? `${values.cityOther ? values.cityOther : ''}` : null}
-                disabled={!showCityOther}
-                label="Outro"/>
             </Grid>
             <Grid item xs={4}>
               <CeosInput
                 id="antibiotic"
                 name="antibiotic"
                 toShow={'antibiotic'}
-                // onblur={handleBur}
                 value={values.antibiotic}
+                onChange={setFieldValue}
                 label="Antibiótico na Emergência"
-              />
-            </Grid>
-            <Grid item xs={5}>
-              <CeosInput
-                id="comorbities"
-                name="comorbities"
-                toShow={'comorbities'}
-                // onblur={handleBur}
-                value={values.comorbities}
-                label="Comorbidades"
-              />
-            </Grid>
-            <Grid item xs={2} className={classes.checkboxView}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
-                    style={{ margin: 0 }}
-                    name="amputation"
-                    onChange={event => handleSwitchChange('amputation', event.target.checked)}
-                    checked={ boolState.amputation }
-                    color="primary"
-                  />
-                }
-                label="Amputado"
               />
             </Grid>
             <Grid item xs={2} className={classes.checkboxView}>
@@ -296,6 +312,32 @@ const PatientForm = props => {
                   />
                 }
                 label="Comorbidades"
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosInput
+                id="otherComorbidities"
+                name="otherComorbidities"
+                toShow={'otherComorbidities'}
+                onChange={setFieldValue}
+                value={values.otherComorbidities}
+                label="Comorbidades"
+                disabled={!values.comorbidities}
+              />
+            </Grid>
+            <Grid item xs={2} className={classes.checkboxView}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
+                    style={{ margin: 0 }}
+                    name="amputation"
+                    onChange={event => handleSwitchChange('amputation', event.target.checked)}
+                    checked={ boolState.amputation }
+                    color="primary"
+                  />
+                }
+                label="Amputado"
               />
             </Grid>
             <Grid item xs={2} className={classes.checkboxView}>
@@ -392,6 +434,7 @@ const PatientForm = props => {
             <CeosButton
               variant="contained"
               // className={classes.buttonSuccess}
+              patient={patient}
               type={'submit'}
               label={'Salvar Paciente'}
               onClick={() => console.log('Pacient added!', values)}

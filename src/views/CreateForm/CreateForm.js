@@ -39,8 +39,8 @@ const CreateForm = (props) => {
       <Paper>
         <PatientRegister/>
         <FractureProvider>
-          {patient.id && <FractureRegister />}
-          {/*<FractureRegister />*/}
+          {/*{patient.identifier && <FractureRegister patient={patient}/>}*/}
+          <FractureRegister patient={patient}/>
         </FractureProvider>
       </Paper>
     </div>

@@ -6,7 +6,7 @@ export const PatientProvider = props => {
   const corsAnywhere = 'https://cors-anywhere.herokuapp.com'
   const serverEndpoint = `${corsAnywhere}/https://0xoc2xlzck.execute-api.us-east-1.amazonaws.com/dev`
 
-  const [patient, setPatient] = useState({id: null})
+  const [patient, setPatient] = useState({identifier: null})
 
   const addPatient = async patient => {
     const res = await fetch(`${serverEndpoint}/patient`, {

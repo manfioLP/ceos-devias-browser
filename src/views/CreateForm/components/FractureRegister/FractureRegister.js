@@ -44,8 +44,11 @@ const FractureRegister = (props) => {
 
   // todo: retrieve info from props here
   const {
-    fractures
+    fractures,
+    patient
   } = props;
+
+  // todo: load fractures with useEffect( ... , [])
 
   useEffect(() => {
     if (!_.isNil(fractures)) {
