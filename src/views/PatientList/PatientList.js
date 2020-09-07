@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import { PatientsToolbar, PatientsTable } from './components';
 import mockData from './data';
+
+import { PatientContext } from "../../contexts/Patient";
 
 const useStyles = makeStyles(theme => ({
   root: {

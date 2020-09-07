@@ -39,10 +39,8 @@ const CreateForm = (props) => {
     <div className={classes.root}>
       <Paper>
         <PatientRegister history={history}/>
-        <FractureProvider>
           {patient.identifier && <FractureRegister patient={patient}/>}
           {/*<FractureRegister patient={patient}/>*/}
-        </FractureProvider>
       </Paper>
     </div>
   )

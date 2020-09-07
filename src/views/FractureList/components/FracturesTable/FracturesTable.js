@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -21,6 +21,8 @@ import {
 
 import { getInitials } from 'helpers';
 
+import {FractureContext} from "../../../../contexts/Fracture";
+
 const useStyles = makeStyles(theme => ({
   root: {},
   content: {
@@ -42,13 +44,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const FracturesTable = props => {
-  const { className, fractures, ...rest } = props;
+  const { className, ...rest } = props;
+
+  const {getFractures} = useContext(FractureContext);
 
   const classes = useStyles();
 
+  const [fractures, setFractures] = useState([]);
   const [selectedFractures, setSelectedFractures] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
+
+  console.log('entrou na pagina')
+  useEffect(() => {
+    console.log('ta no effect')
+    const requestedFractures = getFractures(page, rowsPerPage, setFractures);
+    console.log(requestedFractures)
+  }, [page])
 
   const handleSelectAll = event => {
     const { fractures } = props;
@@ -115,8 +127,8 @@ const FracturesTable = props => {
                     />
                   </TableCell>
                   <TableCell>Prontuário</TableCell>
-                  <TableCell>Lesões associadas ao trauma</TableCell>
                   <TableCell>Regiao Topografica</TableCell>
+                  <TableCell>Osso</TableCell>
                   <TableCell>Primeira Abordagem Cirurgica</TableCell>
                   <TableCell>Data de registro</TableCell>
                 </TableRow>
@@ -141,9 +153,7 @@ const FracturesTable = props => {
                       {fracture.recordNumber}
                     </TableCell>
                     <TableCell>
-                      {fracture.associatedTraumaInjury.map(trauma => (
-                        <Typography> {trauma} </Typography>
-                      ))}
+                      <Typography> {fracture.region} </Typography>
                     </TableCell>
                     <TableCell>
                       {fracture.bone}
@@ -162,7 +172,7 @@ const FracturesTable = props => {
       <CardActions className={classes.actions}>
         <TablePagination
           component="div"
-          count={fractures.length}
+          count={100}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleRowsPerPageChange}
           page={page}

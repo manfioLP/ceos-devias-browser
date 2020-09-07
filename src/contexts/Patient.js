@@ -35,10 +35,37 @@ export const PatientProvider = props => {
       })
   }
 
+  const getPatients = async (page, limit, setPatients) => {
+    const res = await fetch(`${serverEndpoint}/patient?limit=${limit}&page=${page}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }),
+    });
+
+    res
+      .json()
+      .then( res => {
+        if (res.err) {
+          window.alert(`Nao foi buscar os pacientes :( \n Motivo: ${res.err.message}`)
+        } else {
+          window.alert('Pacientes buscados com sucesso!')
+          console.log(res)
+          setPatients(res.data);
+        }
+      })
+    .catch(err => {
+      window.alert('ERROR DE FETCHING')
+      console.log('fetching err...', err)
+    })
+  }
+
   return (
     <PatientContext.Provider value={{
       patientState: [patient, setPatient],
       addPatient,
+      getPatients
     }}>
       {props.children}
     </PatientContext.Provider>

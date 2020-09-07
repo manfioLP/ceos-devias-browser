@@ -12,6 +12,7 @@ import './assets/scss/index.scss';
 import validators from './common/validators';
 import Routes from './Routes';
 import { PatientProvider } from "./contexts/Patient";
+import { FractureProvider } from "./contexts/Fracture";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
 
@@ -33,9 +34,11 @@ export default class App extends Component {
       <ThemeProvider theme={theme}>
         <Router history={browserHistory}>
           <PatientProvider>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <Routes />
-            </MuiPickersUtilsProvider>
+            <FractureProvider>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <Routes />
+              </MuiPickersUtilsProvider>
+            </FractureProvider>
           </PatientProvider>
         </Router>
       </ThemeProvider>

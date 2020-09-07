@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core';
 
 import { getInitials } from 'helpers';
+import {PatientContext} from "../../../../contexts/Patient";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -42,13 +43,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PatientsTable = props => {
-  const { className, patients, ...rest } = props;
+  const { className, ...rest } = props;
+
+  const {getPatients} = useContext(PatientContext);
 
   const classes = useStyles();
 
+  const [patients, setPatients] = useState([]);
   const [selectedPatients, setSelectedPatients] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
+
+  console.log('entrou na pagina')
+  useEffect(() => {
+    console.log('ta no effect')
+    const requestedPatients = getPatients(page, rowsPerPage, setPatients);
+    console.log(requestedPatients)
+  }, [page])
 
   const handleSelectAll = event => {
     const { patients } = props;
@@ -143,9 +154,7 @@ const PatientsTable = props => {
                       </div>
                     </TableCell>
                     <TableCell>
-                      {patient.associatedTraumaInjury.map(trauma => (
-                        <Typography> {trauma} </Typography>
-                      ))}
+                        <Typography> {patient.associatedTraumaInjury} </Typography>
                     </TableCell>
                     <TableCell>
                       {patient.city}
@@ -164,7 +173,7 @@ const PatientsTable = props => {
       <CardActions className={classes.actions}>
         <TablePagination
           component="div"
-          count={patients.length}
+          count={100}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleRowsPerPageChange}
           page={page}

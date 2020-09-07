@@ -35,9 +35,35 @@ export const FractureProvider = props => {
       });
   }
 
+  const getFractures = async (page, limit, setFractures) => {
+    const res = await fetch(`${serverEndpoint}/fracture?limit=${limit}&page=${page}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }),
+    });
+
+    res
+      .json()
+      .then( res => {
+        if (res.err) {
+          window.alert(`Nao foi possivel buscar as fraturas :( \n Motivo: ${res.err.message}`)
+        } else {
+          window.alert('Pacientes buscados com sucesso!')
+          console.log(res)
+          setFractures(res.data);
+        }
+      })
+      .catch(err => {
+        window.alert('ERROR DE FETCHING')
+        console.log('fetching err...', err)
+      })
+  }
+
 
   return (
-    <FractureContext.Provider value={{contextRows: [rows, setRows], selected: [selectedId, setSelectedId], addFracture}}>
+    <FractureContext.Provider value={{contextRows: [rows, setRows], selected: [selectedId, setSelectedId], addFracture, getFractures}}>
       {props.children}
     </FractureContext.Provider>
   )

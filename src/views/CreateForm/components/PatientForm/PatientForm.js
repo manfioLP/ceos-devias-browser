@@ -255,7 +255,7 @@ const PatientForm = props => {
                 id="associatedTraumaInjury"
                 name="associatedTraumaInjury"
                 toShow="associatedTraumaInjury"
-                value={values.city}
+                value={values.associatedTraumaInjury}
                 label="Lesões associadas ao trauma"
                 handleChange={handleChange}
               />
