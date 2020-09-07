@@ -4,7 +4,7 @@ export default [
     value: 'Membro Superior'
   },
   {
-    opt: 1,
+    opt: 2,
     value: 'Membro Inferior'
   },
   {

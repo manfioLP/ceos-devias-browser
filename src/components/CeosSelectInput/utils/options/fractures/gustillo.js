@@ -4,7 +4,7 @@ export default [
     value: '1'
   },
   {
-    opt: 1,
+    opt: 2,
     value: '2'
   },
   {

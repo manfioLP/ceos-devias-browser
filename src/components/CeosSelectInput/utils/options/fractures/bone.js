@@ -4,7 +4,7 @@ export default [
     value: 'Fêmur'
   },
   {
-    opt: 1,
+    opt: 2,
     value: 'Patela'
   },
   {

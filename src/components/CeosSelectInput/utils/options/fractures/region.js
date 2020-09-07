@@ -4,7 +4,7 @@ export default [
     value: 'Coxa'
   },
   {
-    opt: 1,
+    opt: 2,
     value: 'Patela'
   },
   {

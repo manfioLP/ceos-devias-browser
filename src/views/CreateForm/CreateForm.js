@@ -32,15 +32,16 @@ const CreateForm = (props) => {
 
   // const {patient} = props
   const {patientState} = useContext(PatientContext);
-  const [patient, setPatient] = patientState
+  const [patient, setPatient] = patientState;
+  const { history } = props;
 
   return (
     <div className={classes.root}>
       <Paper>
-        <PatientRegister/>
+        <PatientRegister history={history}/>
         <FractureProvider>
-          {/*{patient.identifier && <FractureRegister patient={patient}/>}*/}
-          <FractureRegister patient={patient}/>
+          {patient.identifier && <FractureRegister patient={patient}/>}
+          {/*<FractureRegister patient={patient}/>*/}
         </FractureProvider>
       </Paper>
     </div>

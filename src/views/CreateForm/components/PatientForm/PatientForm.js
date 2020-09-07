@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import moment from 'moment';
 
 import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'react-router-dom'
@@ -18,6 +19,7 @@ import CeosButton from "../../../../components/CeosButton";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import Switch from "@material-ui/core/Switch";
+import CeosDatePicker from "../../../../components/CeosDataPicker";
 
 
 
@@ -42,6 +44,7 @@ const PatientForm = props => {
     patient,
     addPatient,
     ...rest } = props;
+  const { history } = props;
 
   const classes = useStyles();
 
@@ -104,11 +107,36 @@ const PatientForm = props => {
     setBoolState({ ...boolState, [name]: switchValue })
   }
 
+  const handleDatePickerChange = (date, name) => {
+    setFieldValue(name, date)
+  }
+
+  // const dateObject= {
+  //   hour: 20,
+  //   minute: 10,
+  //   day: 11,
+  //   month: 8,
+  //   year: 2020
+  // };
+  //
+  // values.date = moment(dateObject)
+
   // TODO: add dates
+  if (!values.date) {
+    values.date = moment();
+  }
   return (
     <Paper>
       <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <CeosDatePicker
+                label={'Data'}
+                required
+                value={values.date}
+                onChange={date => handleDatePickerChange(date, 'date')}
+              />
+            </Grid>
             <Grid item xs={2}>
               <CeosInput
                 id="recordNumber"
@@ -120,7 +148,7 @@ const PatientForm = props => {
                 onChange={setFieldValue}
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <CeosInput
                 id="name"
                 name="name"
@@ -141,7 +169,7 @@ const PatientForm = props => {
                 onChange={setFieldValue}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosSelectInput
                 id="gender"
                 name="gender"
@@ -331,21 +359,6 @@ const PatientForm = props => {
                   <Switch
                     checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
                     style={{ margin: 0 }}
-                    name="amputation"
-                    onChange={event => handleSwitchChange('amputation', event.target.checked)}
-                    checked={ boolState.amputation }
-                    color="primary"
-                  />
-                }
-                label="Amputado"
-              />
-            </Grid>
-            <Grid item xs={2} className={classes.checkboxView}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
-                    style={{ margin: 0 }}
                     name="diabetes"
                     onChange={event => handleSwitchChange('diabetes', event.target.checked)}
                     checked={ boolState.diabetes }
@@ -353,21 +366,6 @@ const PatientForm = props => {
                   />
                 }
                 label="Diabetes"
-              />
-            </Grid>
-            <Grid item xs={2} className={classes.checkboxView}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
-                    style={{ margin: 0 }}
-                    name="educationCompleted"
-                    onChange={event => handleSwitchChange('educationCompleted', event.target.checked)}
-                    checked={ boolState.educationCompleted }
-                    color="primary"
-                  />
-                }
-                label="Educacao Completa"
               />
             </Grid>
             <Grid item xs={2} className={classes.checkboxView}>
@@ -416,28 +414,17 @@ const PatientForm = props => {
                 label="Fumante"
               />
             </Grid>
-            <Grid item xs={2} className={classes.checkboxView}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
-                    style={{ margin: 0 }}
-                    name="infection"
-                    onChange={event => handleSwitchChange('infection', event.target.checked)}
-                    checked={ boolState.infection }
-                    color="primary"
-                  />
-                }
-                label="Infeccao"
-              />
-            </Grid>
             <CeosButton
               variant="contained"
               // className={classes.buttonSuccess}
               patient={patient}
               type={'submit'}
               label={'Salvar Paciente'}
-              onClick={() => console.log('Pacient added!', values)}
+              onClick={() => {
+                console.log('Pacient added!', values)
+                // todo: add register/patientId
+                // history.push(`/register/${patient.identifier}`)
+              }}
               // disabled={isDisableFields}
             />
           </Grid>

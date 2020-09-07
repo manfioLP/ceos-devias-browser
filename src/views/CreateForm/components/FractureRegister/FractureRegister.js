@@ -33,24 +33,26 @@ const classes = {
 }
 
 const FractureRegister = (props) => {
-  const {selected, contextRows} = useContext(FractureContext);
+  const {selected, contextRows, addFracture} = useContext(FractureContext);
 // const [selectedId, setSelectedId] = useState(null);
   const [selectedId, setSelectedId] = selected;
   // const [rows, setRows] = useState([]);
   const [rows, setRows] = contextRows;
 
-  const [showPortal, setShowPortal] = useState(false);
+  const [showPortal, setShowPortal] = useState();
   const container = React.useRef(null);
 
   // todo: retrieve info from props here
   const {
-    fractures,
+    fractures, // retrieved from patient context
     patient
   } = props;
 
   // todo: load fractures with useEffect( ... , [])
 
   useEffect(() => {
+    console.log('fractures effect...')
+    console.log(fractures)
     if (!_.isNil(fractures)) {
       setRows(fractures)
     }
@@ -72,10 +74,12 @@ const FractureRegister = (props) => {
 
     setRows(newRows)
     setSelectedId(newRows.length - 1)
-    // setShowPortal(true)
   };
 
   const showPortalFunc = index => {
+    console.log('show Portal func...')
+    console.log(index, showPortal)
+    console.log('selected...', selectedId)
     setSelectedId(index)
     setShowPortal(
       selectedId !== index && showPortal === false
@@ -89,8 +93,6 @@ const FractureRegister = (props) => {
   };
 
   const renderTableBody = () => {
-    // todo: render table
-    // if (!_.isEmpty(rows)) {
     return rows.map((row, index) => (
       <TableRow
         selected={selectedId === index}
@@ -120,6 +122,13 @@ const FractureRegister = (props) => {
     return (
       <FractureForm
         {...fracture}
+        fracture={fracture}
+        patient={patient}
+        setShowPortal={setShowPortal}
+        setRows={setRows}
+        rows={rows}
+        addFracture={addFracture}
+        selectedId={selectedId}
         // setSelectedId={setSelectedId}
       />
     )

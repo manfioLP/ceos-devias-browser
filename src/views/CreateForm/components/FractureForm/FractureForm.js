@@ -1,19 +1,28 @@
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {Fragment, useContext, useEffect, useState} from 'react'
 import withFormik from './formik/index.formik'
-import { withStyles } from '@material-ui/styles'
+import {makeStyles, withStyles} from '@material-ui/styles'
 import { FormControlLabel, Switch, Paper, Grid, Typography } from '@material-ui/core'
 import { toast } from 'react-toastify'
 
 // import styles from '../EquipmentForm.style'
 
-// import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 
 import CeosButton from '../../../../components/CeosButton'
 import CeosInput from '../../../../components/CeosInput'
 import PropTypes from "prop-types";
 import CeosSelectInput from '../../../../components/CeosSelectInput'
 
-// based on Engie/src/components/Pgi/Cadastro/Equipment/EquipmentForm
+import { FractureContext } from "../../../../contexts/Fracture";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(3)
+  },
+  content: {
+    marginTop: theme.spacing(2)
+  }
+}));
 
 const FractureForm = props => {
 
@@ -23,13 +32,20 @@ const FractureForm = props => {
     handleChange,
     handleSubmit,
     handleBlur,
-    setFieldValue
-  } = props
+    setFieldValue,
+    patient,
+    fracture,
+    setShowPortal,
+    addFracture,
+  } = props;
 
-  // const handleSubmit = () => {
-  //   window.alert('not implemented!')
-  // }
-  console.log('values...', values)
+  const classes = useStyles();
+
+  const {selected, contextRows} = useContext(FractureContext);
+// const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = selected;
+  // const [rows, setRows] = useState([]);
+  const [rows, setRows] = contextRows;
 
   const [showMechanismOther, setShowMechanismOther] = useState(!values.mechanism && values.mechanism === 'Outro');
   const [showLimbOther, setShowLimbOther] = useState(!values.limb && values.limb === 'Outro');
@@ -37,32 +53,38 @@ const FractureForm = props => {
   const [showTraumaInjuryOther, setShowTraumaInjuryOther] = useState(!values.associatedTraumaInjury && values.associatedTraumaInjury === 'Outro');
   const [showSurgicalApproachOther, setShowSurgicalApproachOther] = useState(!values.firstSurgicalApproach && values.firstSurgicalApproach === 'Outro');
 
+  useEffect(() => {
+  }, [fracture])
   useEffect( () => {
-    if (values.mechanism === 'Outro') {
+    const compareString = values.mechanism ? (values.mechanism.slice(4, values.mechanism.length)).trim() : '';
+    if (compareString === 'Outro') {
       setShowMechanismOther(true)
     } else {
       setShowMechanismOther(false)
     }
-  }, [values.mechanism, values.limb])
+  }, [values.mechanism]);
 
   useEffect( () => {
-    if (values.limb === 'Outro') {
+    const compareString = values.limb ? (values.limb.slice(4, values.limb.length)).trim() : '';
+    if (compareString === 'Outro') {
       setShowLimbOther(true)
     } else {
       setShowLimbOther(false)
     }
-  }, [values.limb])
+  }, [values.limb]);
 
   useEffect( () => {
-    if (values.bone === 'Outro') {
+    const compareString = values.bone ? (values.bone.slice(4, values.bone.length)).trim() : '';
+    if (compareString === 'Outro') {
       setShowBoneOther(true)
     } else {
       setShowBoneOther(false)
     }
-  }, [values.bone])
+  }, [values.bone]);
 
   useEffect( () => {
-    if (values.associatedTraumaInjury === 'Outro') {
+    const compareString = values.associatedTraumaInjury ? (values.associatedTraumaInjury.slice(4, values.associatedTraumaInjury.length)).trim() : '';
+    if (compareString === 'Outro') {
       setShowTraumaInjuryOther(true)
     } else {
       setShowTraumaInjuryOther(false)
@@ -70,12 +92,23 @@ const FractureForm = props => {
   }, [values.associatedTraumaInjury])
 
   useEffect( () => {
-    if (values.firstSurgicalApproach === 'Outro') {
+    const compareString = values.firstSurgicalApproach ? (values.firstSurgicalApproach.slice(4, values.firstSurgicalApproach.length)).trim() : '';
+    if (compareString === 'Outro') {
       setShowSurgicalApproachOther(true)
     } else {
       setShowSurgicalApproachOther(false)
     }
   }, [values.firstSurgicalApproach])
+
+  const [boolState, setBoolState] = React.useState({
+    infection: false,
+    amputation: false,
+  });
+
+  const handleSwitchChange = (name, switchValue) => {
+    setFieldValue(name, switchValue);
+    setBoolState({ ...boolState, [name]: switchValue });
+  };
 
   return (
     <Paper>
@@ -90,6 +123,7 @@ const FractureForm = props => {
               // onBlur={handleBlur}
               value={values.census}
               label="Descrição Censo"
+              onChange={setFieldValue}
             />
           </Grid>
           <Grid item xs={6}>
@@ -118,12 +152,12 @@ const FractureForm = props => {
               id="boneOther"
               name="boneOther"
               toshow="boneOther"
-              value={values.bone}
               label="Outro"
-              // handleChange={handleChange}
               value={showBoneOther ? `${values.boneOther ? values.boneOther : ''}` : null}
               disabled={!showBoneOther}
-              label="Outro"/>
+              label="Outro"
+              onChange={setFieldValue}
+            />
           </Grid>
           <Grid item xs={3}>
             <CeosSelectInput
@@ -145,6 +179,7 @@ const FractureForm = props => {
               // handleChange={handleChange}
               value={showMechanismOther ? `${values.mechanismOther ? values.mechanismOther : ''}` : null}
               disabled={!showMechanismOther}
+              onChange={setFieldValue}
             />
           </Grid>
           <Grid item xs={3}>
@@ -155,6 +190,7 @@ const FractureForm = props => {
               value={values.limb}
               label="Membro acometido"
               handleChange={handleChange}
+              onChange={setFieldValue}
             />
           </Grid>
           <Grid item xs={3}>
@@ -162,12 +198,13 @@ const FractureForm = props => {
               id="limbOther"
               name="limbOther"
               toshow="limbOther"
-              value={values.limb}
               label="Outro"
               // handleChange={handleChange}
               value={showLimbOther ? `${values.limbOther ? values.limbOther : ''}` : null}
               disabled={!showLimbOther}
-              label="Outro"/>
+              label="Outro"
+              onChange={setFieldValue}
+            />
           </Grid>
           <Grid item xs={3}>
             <CeosSelectInput
@@ -189,6 +226,7 @@ const FractureForm = props => {
               handleChange={handleChange}
               value={showTraumaInjuryOther ? `${values.associatedTraumaInjuryOther ? values.associatedTraumaInjuryOther : ''}` : null}
               disabled={!showTraumaInjuryOther}
+              onChange={setFieldValue}
             />
           </Grid>
           <Grid item xs={4}>
@@ -211,6 +249,7 @@ const FractureForm = props => {
               // handleChange={handleChange}
               value={showSurgicalApproachOther ? `${values.firstSurgicalApproachOther ? values.firstSurgicalApproachOther : ''}` : null}
               disabled={!showSurgicalApproachOther}
+              onChange={setFieldValue}
             />
           </Grid>
           <Grid item xs={2}>
@@ -233,15 +272,49 @@ const FractureForm = props => {
               handleChange={handleChange}
             />
           </Grid>
+          <Grid item xs={2} className={classes.checkboxView}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
+                  style={{ margin: 0 }}
+                  name="infection"
+                  onChange={event => handleSwitchChange('infection', event.target.checked)}
+                  checked={ boolState.infection }
+                  color="primary"
+                />
+              }
+              label="Infeccao"
+            />
+          </Grid>
+          <Grid item xs={2} className={classes.checkboxView}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
+                  style={{ margin: 0 }}
+                  name="amputation"
+                  onChange={event => handleSwitchChange('amputation', event.target.checked)}
+                  checked={ boolState.amputation }
+                  color="primary"
+                />
+              }
+              label="Amputado"
+            />
+          </Grid>
           <CeosButton
             variant="contained"
             // className={classes.buttonSuccess}
-            // type={'submit'}
+            type={'submit'}
             label={'Salvar'}
-            onClick={() => {
-              // newFracture();
-              window.alert('salvo no forms')
-              console.log('values...', values)
+            onClick={(event) => {
+              console.log('click valuesss', values)
+              // event.preventDefault();
+              // console.log('patient...', patient)
+              // console.log('clicou aqui tcheee')
+              // console.log('values...', values)
+              // console.log('selected...', selectedId)
+              // rows[selectedId] = newFracture
             }
             }
             // disabled={isDisableFields}

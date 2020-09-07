@@ -4,7 +4,7 @@ export default [
     value: 'Fixação Externa'
   },
   {
-    opt: 1,
+    opt: 2,
     value: 'Fixação Interna'
   },
   {
