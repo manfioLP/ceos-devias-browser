@@ -138,12 +138,11 @@ export default function IntegrationReactSelect(props) {
     onBlur,
     required,
     multiple,
-    input
-  } = props
+    input,
+    renderValue
+  } = props;
 
-  // TODO: get options from a file instead of props
   const options = getOptionsToDisplay(id);
-  // const options = ['opcao1', 'opcao2', 'opcao3', 'Outro'];
 
   const suggestions = () => {
     const list = [
@@ -176,6 +175,7 @@ export default function IntegrationReactSelect(props) {
   return (
     <div>
       <Select
+        renderValue={renderValue}
         multiple={multiple}
         input={input}
         classes={classes}

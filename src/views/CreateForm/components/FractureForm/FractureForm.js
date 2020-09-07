@@ -14,6 +14,12 @@ import PropTypes from "prop-types";
 import CeosSelectInput from '../../../../components/CeosSelectInput'
 
 import { FractureContext } from "../../../../contexts/Fracture";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import Input from "@material-ui/core/Input";
+import Chip from "@material-ui/core/Chip";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -110,11 +116,58 @@ const FractureForm = props => {
     setBoolState({ ...boolState, [name]: switchValue });
   };
 
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  const names = ['1', '2', '3', '4'];
+  const testTrauma = [];
+  const handleChange2 = (event) => {
+    setTraumas(event.target.value);
+  };
+
+  const [traumas, setTraumas]= useState([])
   return (
     <Paper>
       <Typography variant={'h4'}>Informação da Fratura</Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} style={{ marginTop: 10 }}>
+          <Grid item xs={12}>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-mutiple-chip-label">Chip</InputLabel>
+              <Select
+                labelId="demo-mutiple-chip-label"
+                id="demo-mutiple-chip"
+                multiple
+                value={traumas}
+                onChange={handleChange2}
+                input={<Input id="select-multiple-chip" />}
+                renderValue={(selected) => (
+                  <div>
+                    {selected.map((value) => {
+                      console.log('selected...', value)
+                      return (
+                      <Chip key={value} label={value} className={classes} />
+                    )})}
+                  </div>
+                )}
+                MenuProps={MenuProps}
+              >
+                {names.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
           <Grid item xs={6}>
             <CeosInput
               id="description"
@@ -208,12 +261,22 @@ const FractureForm = props => {
           </Grid>
           <Grid item xs={3}>
             <CeosSelectInput
-              id="associatedTraumaInjury"
-              name="associatedTraumaInjury"
-              toshow="associatedTraumaInjury"
-              value={values.associatedTraumaInjury}
+              id="associatedFractureTraumaInjury"
+              name="associatedFractureTraumaInjury"
+              toshow="associatedFractureTraumaInjury"
+              value={values.associatedFractureTraumaInjury}
               label="Lesões associadas diretamente a fratura exposta"
               handleChange={handleChange}
+              onChange={handleChange}
+              multiple
+              renderValue={(selected) => (
+                <div>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} className={classes} />
+                  ))}
+                </div>
+              )}
+              // input={<Input id="select-multiple-chip" />}
             />
           </Grid>
           <Grid item xs={3}>

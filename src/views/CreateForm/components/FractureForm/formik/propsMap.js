@@ -7,7 +7,7 @@ const propsToValuesMap = () => ({
   region: null,
   ao: null,
   gustillo: null,
-  associatedTraumaInjury: null,
+  associatedFractureTraumaInjury: [],
   amputated: null,
   firstSurgicalApproach: null
 })
