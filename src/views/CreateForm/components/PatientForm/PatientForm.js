@@ -14,7 +14,6 @@ import {Grid, Paper, Typography} from '@material-ui/core'
 import CeosInput from '../../../../components/CeosInput'
 import CeosExpansionPanel from "../../../../components/CeosExpansionPanel";
 import CeosSelectInput from "../../../../components/CeosSelectInput";
-import {toast} from "react-toastify";
 import CeosButton from "../../../../components/CeosButton";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
@@ -97,7 +96,7 @@ const PatientForm = props => {
     smoker: false,
     ethylista: false,
     infection: false,
-    amputation: false,
+    death: false,
     comorbidities: false,
     has: false
   });
@@ -138,14 +137,23 @@ const PatientForm = props => {
               />
             </Grid>
             <Grid item xs={2}>
-              <CeosInput
-                id="recordNumber"
-                name="recordNumber"
-                toShow={'recordNumber'}
-                // onblur={handleBur}
-                value={values.recordNumber}
-                label="Numero de Prontuario"
-                onChange={setFieldValue}
+              <CeosSelectInput
+                id="weekday"
+                name="weekday"
+                toShow={'weekday'}
+                value={values.weekday}
+                label="Dia da Semana"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CeosSelectInput
+                id="month"
+                name="month"
+                toShow="month"
+                value={values.month}
+                label="Mes"
+                handleChange={handleChange}
               />
             </Grid>
             <Grid item xs={3}>
@@ -161,12 +169,77 @@ const PatientForm = props => {
             </Grid>
             <Grid item xs={2}>
               <CeosInput
+                id="recordNumber"
+                name="recordNumber"
+                toShow={'recordNumber'}
+                // onblur={handleBur}
+                value={values.recordNumber}
+                label="Numero de Prontuario"
+                onChange={setFieldValue}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CeosInput
                 id="age"
                 name="age"
                 toShow={'age'}
                 value={values.age}
                 label="Idade"
                 onChange={setFieldValue}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CeosSelectInput
+                id="ageCategory"
+                name="ageCategory"
+                toShow={'ageCategory'}
+                value={values.ageCategory}
+                label="Categorizar Idade"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CeosInput
+                id="exposureTime"
+                name="exposureTime"
+                toShow={'exposureTime'}
+                // onblur={handleBur}
+                value={values.exposureTime}
+                label="Tempo de Exposição"
+                onChange={setFieldValue}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CeosSelectInput
+                id="exposureTimeCategory"
+                name="exposureTimeCategory"
+                toShow={'exposureTimeCategory'}
+                // onblur={handleBur}
+                value={values.exposureTimeCategory}
+                label="Categorizar Tempo de Exposição"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CeosInput
+                id="hour"
+                name="hour"
+                toShow={'hour'}
+                // onblur={handleBur}
+                value={values.hour}
+                label="Horário de admissão"
+                onChange={setFieldValue}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CeosSelectInput
+                id="admissionHourCategory"
+                name="admissionHourCategory"
+                toShow={'admissionHourCategory'}
+                // onblur={handleBur}
+                value={values.admissionHourCategory}
+                label="Categorizar Horário de admissão"
+                handleChange={handleChange}
               />
             </Grid>
             <Grid item xs={2}>
@@ -179,7 +252,17 @@ const PatientForm = props => {
                 handleChange={handleChange}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
+              <CeosSelectInput
+                id="race"
+                name="race"
+                toShow="race"
+                value={values.race}
+                label="Raça"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={2}>
               <CeosSelectInput
                 id="profession"
                 name="profession"
@@ -190,7 +273,7 @@ const PatientForm = props => {
                 label="Profissao"
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosInput
                 id="professionOther"
                 name="professionOther"
@@ -203,7 +286,7 @@ const PatientForm = props => {
                 onChange={setFieldValue}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosSelectInput
                 id="civilStatus"
                 name="civilStatus"
@@ -213,7 +296,7 @@ const PatientForm = props => {
                 handleChange={handleChange}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosInput
                 id="civilStatusOther"
                 name="civilStatusOther"
@@ -284,29 +367,7 @@ const PatientForm = props => {
                 handleChange={handleChange}
               />
             </Grid>
-            <Grid item xs={3}>
-              <CeosInput
-                id="exposureTime"
-                name="exposureTime"
-                toShow={'exposureTime'}
-                // onblur={handleBur}
-                value={values.exposureTime}
-                label="Tempo de Exposição"
-                onChange={setFieldValue}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <CeosInput
-                id="hour"
-                name="hour"
-                toShow={'hour'}
-                // onblur={handleBur}
-                value={values.hour}
-                label="Horário de admissão"
-                onChange={setFieldValue}
-              />
-            </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosInput
                 id="hospitalizationAverageTime"
                 name="hospitalizationAverageTime"
@@ -317,7 +378,7 @@ const PatientForm = props => {
                 onChange={setFieldValue}
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <CeosInput
                 id="antibiotic"
                 name="antibiotic"
@@ -342,7 +403,7 @@ const PatientForm = props => {
                 label="Comorbidades"
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosInput
                 id="otherComorbidities"
                 name="otherComorbidities"
@@ -412,6 +473,21 @@ const PatientForm = props => {
                   />
                 }
                 label="Fumante"
+              />
+            </Grid>
+            <Grid item xs={2} className={classes.checkboxView}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
+                    style={{ margin: 0 }}
+                    name="death"
+                    onChange={event => handleSwitchChange('death', event.target.checked)}
+                    checked={ boolState.death }
+                    color="primary"
+                  />
+                }
+                label="Óbito"
               />
             </Grid>
             <CeosButton

@@ -6,12 +6,18 @@ const propsToValuesMap = () => ({
         time: null,
         exposureTime: null,
         antibiotic: null,
-        comorbities: null,
+        comorbidities: null,
         profession: null,
         gender: null,
         city: null,
         education: null,
-        admissionDate: null
+        admissionDate: null,
+        professionOther: null,
+        cityOther: null,
+        degreeLevel: null,
+        otherComorbidities: null,
+        month: null,
+        weekday: null
 })
 
 export default propsToValuesMap

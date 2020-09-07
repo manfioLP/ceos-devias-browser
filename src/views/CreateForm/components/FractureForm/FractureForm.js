@@ -132,7 +132,7 @@ const FractureForm = props => {
               name="region"
               toshow="region"
               value={values.region}
-              label="Região topográfica"
+              label="Região Anatômica Acometida"
               handleChange={handleChange}
             />
           </Grid>
@@ -217,11 +217,11 @@ const FractureForm = props => {
             />
           </Grid>
           <Grid item xs={3}>
-            <CeosSelectInput
+            <CeosInput
               id="associatedTraumaInjuryOther"
               name="associatedTraumaInjuryOther"
               toshow="associatedTraumaInjuryOther"
-              value={values.associatedTraumaInjury}
+              value={showTraumaInjuryOther ? values.associatedTraumaInjuryOther ? values.associatedTraumaInjuryOther : '' : null}
               label="Lesões associadas diretamente a fratura exposta"
               handleChange={handleChange}
               value={showTraumaInjuryOther ? `${values.associatedTraumaInjuryOther ? values.associatedTraumaInjuryOther : ''}` : null}
@@ -272,6 +272,17 @@ const FractureForm = props => {
               handleChange={handleChange}
             />
           </Grid>
+          <Grid item xs={2}>
+            <CeosInput
+              id="instrument"
+              name="instrument"
+              toshow="instrument"
+              value={values.instrument}
+              label="Instrumento de Pesquisa"
+              handleChange={handleChange}
+              onChange={setFieldValue}
+            />
+          </Grid>
           <Grid item xs={2} className={classes.checkboxView}>
             <FormControlLabel
               control={
@@ -299,7 +310,7 @@ const FractureForm = props => {
                   color="primary"
                 />
               }
-              label="Amputado"
+              label="Amputação Não Traumática"
             />
           </Grid>
           <CeosButton

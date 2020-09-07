@@ -5,8 +5,7 @@ import { withFormik } from 'formik/dist/index'
 
 import propsToValuesMap from './propsMap'
 
-// todo: add use of context
-const weekdays = ['Domingo', 'Segunda', 'Terça ', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
+// const weekdays = ['Domingo', 'Segunda', 'Terça ', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
 
 
 const handleSubmit = (values, {props}) => {
@@ -15,13 +14,13 @@ const handleSubmit = (values, {props}) => {
   } else {
     console.log('formik props on submit...', props);
     console.log('values no formik...', values);
-    const weekday = weekdays[values.date.day()]
+    // const weekday = weekdays[values.date.day()]
     const dateForIdentifier = values.date.date()
     props.addPatient({
       recordNumber: values.recordNumber,
       name: values.name,
       age: values.age,
-      hour: values.hour,
+      admissionHour: values.hour,
       time: values.time,
       exposureTime: values.exposureTime, // check
       antibioticAtEmergency: values.antibiotic,
@@ -36,7 +35,12 @@ const handleSubmit = (values, {props}) => {
       hospitalizationAverageTime: values.hospitalizationAverageTime,
       admissionDate: values.date,
       date: dateForIdentifier,
-      weekday
+      death: values.death,
+      weekday: values.weekday,
+      month: values.month,
+      ageCategory: values.ageCategory,
+      admissionHourCategory: values.admissionHourCategory,
+      exposureTimeCategory: values.exposureTimeCategory
     })
   }
 }

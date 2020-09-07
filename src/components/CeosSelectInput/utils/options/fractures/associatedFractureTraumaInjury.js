@@ -21,6 +21,14 @@ export default [
   },
   {
     opt: 6,
+    value: 'Lesão ligamentar'
+  },
+  {
+    opt: 7,
+    value: 'Luxação'
+  },
+  {
+    opt: 8,
     value: 'Outro'
   },
   {

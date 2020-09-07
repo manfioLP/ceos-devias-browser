@@ -127,7 +127,7 @@ const FracturesTable = props => {
                     />
                   </TableCell>
                   <TableCell>Prontuário</TableCell>
-                  <TableCell>Regiao Topografica</TableCell>
+                  <TableCell>Região Anatômica Acometida</TableCell>
                   <TableCell>Osso</TableCell>
                   <TableCell>Primeira Abordagem Cirurgica</TableCell>
                   <TableCell>Data de registro</TableCell>

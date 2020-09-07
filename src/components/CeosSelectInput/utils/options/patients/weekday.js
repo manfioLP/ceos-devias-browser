@@ -5,7 +5,7 @@ export default [
   },
   {
     opt: 2,
-    value: 'Terça '
+    value: 'Terça'
   },
   {
     opt: 3,
