@@ -30,8 +30,7 @@ const handleSubmit = (values, {props}) => {
       gender: values.gender.length,
       city: values.cityOther ? values.cityOther : values.city,
       education: values.degreeLevel,
-      // civilStatus: values.civilStatusOther ? values.civilStatusOther : values.civilStatus,
-      associatedTraumaInjury: values.associatedTraumaInjury,
+      civilStatus: values.civilStatusOther ? values.civilStatusOther : values.civilStatus,
       hospitalizationAverageTime: values.hospitalizationAverageTime,
       admissionDate: values.date,
       date: dateForIdentifier,
@@ -40,7 +39,10 @@ const handleSubmit = (values, {props}) => {
       month: values.month,
       ageCategory: values.ageCategory,
       admissionHourCategory: values.admissionHourCategory,
-      exposureTimeCategory: values.exposureTimeCategory
+      exposureTimeCategory: values.exposureTimeCategory,
+      associatedTraumaInjury: values.traumas,
+      associatedTraumaInjuryOther: values.associatedTraumaInjury,
+      associatedClosedFractureDescription: values.associatedClosedFractureDescription
     })
   }
 }

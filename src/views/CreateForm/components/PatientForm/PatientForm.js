@@ -19,6 +19,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import Switch from "@material-ui/core/Switch";
 import CeosDatePicker from "../../../../components/CeosDataPicker";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import Input from "@material-ui/core/Input";
+import Chip from "@material-ui/core/Chip";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import getOptionsToDisplay from "../../../../components/CeosSelectInput/utils/getOptionsToDisplay";
 
 
 
@@ -47,10 +54,12 @@ const PatientForm = props => {
 
   const classes = useStyles();
 
+  const [traumas, setTraumas] = useState([]);
   const [showCityOther, setShowCityOther] = useState(false);
   const [showCivilStatusOther, setShowCivilStatusOther] = useState(false);
   const [showProfessionOther, setShowProfessionOther] = useState(false);
   const [showAssociatedTraumaInjuryOther, setShowAssociatedTraumaInjuryOther] = useState(false);
+  const [showClosedFractureDescription, setShowClosedFractureDescription] = useState(Boolean(values.associatedClosedFractureDescription));
 
   useEffect( () => {
     const compareString = values.city ? values.city.slice(4, values.city.length) : ''
@@ -81,14 +90,19 @@ const PatientForm = props => {
   }, [values.profession]);
 
   useEffect( () => {
-    const compareString = values.associatedTraumaInjury ? values.associatedTraumaInjury.slice(4, values.associatedTraumaInjury.length) : ''
+    let traumaOther = false;
+    let closedFracture = false;
 
-    if (compareString === 'Outro') {
-      setShowAssociatedTraumaInjuryOther(true)
-    } else {
-      setShowAssociatedTraumaInjuryOther(false)
+    for (const trauma of traumas) {
+      const compareString = trauma.slice(4, trauma.length).trim();
+      if (compareString === 'Outro')
+        traumaOther = true;
+      if (compareString === 'Fratura fechada')
+        closedFracture = true;
     }
-  }, [values.associatedTraumaInjury]);
+    setShowAssociatedTraumaInjuryOther(traumaOther);
+    setShowClosedFractureDescription(closedFracture);
+  }, [traumas]);
 
   const [boolState, setBoolState] = React.useState({
     educationCompleted: false,
@@ -110,20 +124,29 @@ const PatientForm = props => {
     setFieldValue(name, date)
   }
 
-  // const dateObject= {
-  //   hour: 20,
-  //   minute: 10,
-  //   day: 11,
-  //   month: 8,
-  //   year: 2020
-  // };
-  //
-  // values.date = moment(dateObject)
-
-  // TODO: add dates
   if (!values.date) {
     values.date = moment();
   }
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  const handleChange2 = (event) => {
+    console.log('event...', event.target.value)
+    setTraumas(event.target.value);
+    values.traumas = event.target.value;
+  };
+
+  const options = getOptionsToDisplay('associatedTraumaInjury');
+
   return (
     <Paper>
       <form onSubmit={handleSubmit}>
@@ -333,17 +356,35 @@ const PatientForm = props => {
                 onChange={setFieldValue}
               />
             </Grid>
-            <Grid item xs={3}>
-              <CeosSelectInput
-                id="associatedTraumaInjury"
-                name="associatedTraumaInjury"
-                toShow="associatedTraumaInjury"
-                value={values.associatedTraumaInjury}
-                label="Lesões associadas ao trauma"
-                handleChange={handleChange}
-              />
+            <Grid item xs={2}>
+              <FormControl className={classes.formControl} style={{width: 300}}>
+                <InputLabel id="demo-mutiple-chip-label">Lesões associadas ao trauma</InputLabel>
+                <Select
+                  labelId="demo-mutiple-chip-label"
+                  id="demo-mutiple-chip"
+                  multiple
+                  value={traumas}
+                  onChange={handleChange2}
+                  input={<Input id="select-multiple-chip" />}
+                  renderValue={(selected) => (
+                    <div>
+                      {selected.map((value) => {
+                        return (
+                          <Chip key={value} label={value} className={classes} />
+                        )})}
+                    </div>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <CeosInput
                 id="associatedTraumaInjuryOther"
                 name="associatedTraumaInjuryOther"
@@ -354,6 +395,18 @@ const PatientForm = props => {
                 disabled={!showAssociatedTraumaInjuryOther}
                 onChange={setFieldValue}
                 label="Outro"
+                onChange={setFieldValue}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CeosInput
+                id="associatedClosedFractureDescription"
+                name="associatedClosedFractureDescription"
+                toshow="associatedClosedFractureDescription"
+                value={showClosedFractureDescription ? values.associatedClosedFractureDescription ? values.associatedClosedFractureDescription : '' : null}
+                label="Descricao fratura fechada"
+                handleChange={handleChange}
+                disabled={!showClosedFractureDescription}
                 onChange={setFieldValue}
               />
             </Grid>

@@ -16,7 +16,6 @@ const handleSubmit = (values, { props }) => {
     patient: props.patient._id,
     recordNumber: props.patient.recordNumber,
     ao: values.ao,
-    associatedTraumaInjury: values.associatedTraumaInjuryOther ? values.associatedTraumaInjuryOther : values.associatedTraumaInjury,
     bone: values.boneOther ? values.boneOther : values.bone,
     description: values.description,
     firstSurgicalApproach: values.firstSurgicalApproachOther ? values.firstSurgicalApproachOther : values.firstSurgicalApproach,
@@ -26,6 +25,10 @@ const handleSubmit = (values, { props }) => {
     region: values.region,
     amputation: values.amputation,
     infection: values.infection,
+    associatedFractureTraumaInjury: values.traumas,
+    associatedFractureTraumaInjuryOther: values.associatedFractureTraumaInjuryOther,
+    nervousTraumaDescription: values.nervousTraumaDescription,
+    instrument: values.instrument
   }
   const newRows = [...props.rows];
   newRows[props.selectedId] = fracture;
