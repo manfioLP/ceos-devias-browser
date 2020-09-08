@@ -9,7 +9,8 @@ const propsToValuesMap = () => ({
   gustillo: null,
   associatedFractureTraumaInjury: [],
   amputated: null,
-  firstSurgicalApproach: null
+  firstSurgicalApproach: null,
+  vascularTraumaDescription: null
 })
 
 export default propsToValuesMap

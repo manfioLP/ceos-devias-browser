@@ -28,7 +28,8 @@ const handleSubmit = (values, { props }) => {
     associatedFractureTraumaInjury: values.traumas,
     associatedFractureTraumaInjuryOther: values.associatedFractureTraumaInjuryOther,
     nervousTraumaDescription: values.nervousTraumaDescription,
-    instrument: values.instrument
+    instrument: values.instrument,
+    vascularTraumaDescription: values.vascularTraumaDescription,
   }
   const newRows = [...props.rows];
   newRows[props.selectedId] = fracture;

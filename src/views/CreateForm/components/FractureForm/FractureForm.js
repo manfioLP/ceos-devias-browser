@@ -62,6 +62,7 @@ const FractureForm = props => {
   const [showTraumaInjuryOther, setShowTraumaInjuryOther] = useState(!values.associatedTraumaInjury && values.associatedTraumaInjury === 'Outro');
   const [showSurgicalApproachOther, setShowSurgicalApproachOther] = useState(!values.firstSurgicalApproach && values.firstSurgicalApproach === 'Outro');
   const [showTraumaNervous, setShowTraumaNervous] = useState(Boolean(values.nervousTraumaDescription));
+  const [showVascularTrauma, setShowVascularTrauma] = useState(Boolean(values.vascularTraumaDescription));
 
   useEffect( () => {
     const compareString = values.mechanism ? (values.mechanism.slice(4, values.mechanism.length)).trim() : '';
@@ -93,13 +94,17 @@ const FractureForm = props => {
   useEffect( () => {
     let traumaOther = false;
     let nervousOther = false;
+    let vascularOther = false;
     for (const trauma of traumas) {
       const compareString = trauma.slice(4, trauma.length).trim();
       if (compareString === 'Outro')
         traumaOther = true;
-      if (compareString === 'Lesão de nervos periférico' || compareString === 'Lesões vasculares')
+      if (compareString === 'Lesão de nervos periférico')
         nervousOther = true;
+      if (compareString === 'Lesões vasculares')
+        vascularOther = true
     }
+    setShowVascularTrauma(vascularOther)
     setShowTraumaInjuryOther(traumaOther);
     setShowTraumaNervous(nervousOther);
   }, [traumas])
@@ -146,7 +151,7 @@ const FractureForm = props => {
       <Typography variant={'h4'}>Informação da Fratura</Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} style={{ marginTop: 10 }}>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <CeosInput
               id="description"
               name="description"
@@ -157,7 +162,18 @@ const FractureForm = props => {
               onChange={setFieldValue}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
+            <CeosInput
+              id="instrument"
+              name="instrument"
+              toshow="instrument"
+              value={values.instrument}
+              label="Instrumento de Pesquisa"
+              handleChange={handleChange}
+              onChange={setFieldValue}
+            />
+          </Grid>
+          <Grid item xs={4}>
             <CeosSelectInput
               id="region"
               name="region"
@@ -213,7 +229,7 @@ const FractureForm = props => {
               onChange={setFieldValue}
             />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             <CeosSelectInput
               id="limb"
               name="limb"
@@ -237,7 +253,80 @@ const FractureForm = props => {
               onChange={setFieldValue}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
+            <CeosSelectInput
+              id="firstSurgicalApproach"
+              name="firstSurgicalApproach"
+              toshow="firstSurgicalApproach"
+              value={values.firstSurgicalApproach}
+              label="Primeira abordagem Cirurgica"
+              handleChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <CeosInput
+              id="firstSurgicalApproachOther"
+              name="firstSurgicalApproachOther"
+              toshow="firstSurgicalApproachOther"
+              value={values.firstSurgicalApproach}
+              label="Outro"
+              // handleChange={handleChange}
+              value={showSurgicalApproachOther ? `${values.firstSurgicalApproachOther ? values.firstSurgicalApproachOther : ''}` : null}
+              disabled={!showSurgicalApproachOther}
+              onChange={setFieldValue}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <CeosSelectInput
+              id="gustillo"
+              name="gustillo"
+              toshow="gustillo"
+              value={values.gustillo}
+              label="Classificação Gustillo"
+              handleChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <CeosSelectInput
+              id="ao"
+              name="ao"
+              toshow="ao"
+              value={values.ao}
+              label="Classificação ao"
+              handleChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={2} className={classes.checkboxView}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
+                  style={{ margin: 0 }}
+                  name="infection"
+                  onChange={event => handleSwitchChange('infection', event.target.checked)}
+                  checked={ boolState.infection }
+                  color="primary"
+                />
+              }
+              label="Infeccao"
+            />
+          </Grid>
+          <Grid item xs={3} className={classes.checkboxView}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
+                  style={{ margin: 0 }}
+                  name="amputation"
+                  onChange={event => handleSwitchChange('amputation', event.target.checked)}
+                  checked={ boolState.amputation }
+                  color="primary"
+                />
+              }
+              label="Amputação Não Traumática"
+            />
+          </Grid>
+          <Grid item xs={3}>
             <FormControl className={classes.formControl} style={{width: 300}}>
               <InputLabel id="demo-mutiple-chip-label">Lesões associadas</InputLabel>
               <Select
@@ -293,88 +382,16 @@ const FractureForm = props => {
               onChange={setFieldValue}
             />
           </Grid>
-          <Grid item xs={4}>
-            <CeosSelectInput
-              id="firstSurgicalApproach"
-              name="firstSurgicalApproach"
-              toshow="firstSurgicalApproach"
-              value={values.firstSurgicalApproach}
-              label="Primeira abordagem Cirurgica"
-              handleChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <CeosInput
-              id="firstSurgicalApproachOther"
-              name="firstSurgicalApproachOther"
-              toshow="firstSurgicalApproachOther"
-              value={values.firstSurgicalApproach}
-              label="Outro"
-              // handleChange={handleChange}
-              value={showSurgicalApproachOther ? `${values.firstSurgicalApproachOther ? values.firstSurgicalApproachOther : ''}` : null}
-              disabled={!showSurgicalApproachOther}
-              onChange={setFieldValue}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <CeosSelectInput
-              id="gustillo"
-              name="gustillo"
-              toshow="gustillo"
-              value={values.gustillo}
-              label="Classificação Gustillo"
-              handleChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <CeosSelectInput
-              id="ao"
-              name="ao"
-              toshow="ao"
-              value={values.ao}
-              label="Classificação ao"
-              handleChange={handleChange}
-            />
-          </Grid>
           <Grid item xs={2}>
             <CeosInput
-              id="instrument"
-              name="instrument"
-              toshow="instrument"
-              value={values.instrument}
-              label="Instrumento de Pesquisa"
+              id="vascularTraumaDescription"
+              name="vascularTraumaDescription"
+              toshow="vascularTraumaDescription"
+              value={showVascularTrauma ? values.vascularTraumaDescription ? values.vascularTraumaDescription : '' : null}
+              label="Descricao lesao nervosa"
               handleChange={handleChange}
+              disabled={!showVascularTrauma}
               onChange={setFieldValue}
-            />
-          </Grid>
-          <Grid item xs={2} className={classes.checkboxView}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
-                  style={{ margin: 0 }}
-                  name="infection"
-                  onChange={event => handleSwitchChange('infection', event.target.checked)}
-                  checked={ boolState.infection }
-                  color="primary"
-                />
-              }
-              label="Infeccao"
-            />
-          </Grid>
-          <Grid item xs={2} className={classes.checkboxView}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
-                  style={{ margin: 0 }}
-                  name="amputation"
-                  onChange={event => handleSwitchChange('amputation', event.target.checked)}
-                  checked={ boolState.amputation }
-                  color="primary"
-                />
-              }
-              label="Amputação Não Traumática"
             />
           </Grid>
           <CeosButton
