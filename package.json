@@ -22,6 +22,7 @@
     "@material-ui/styles": "^4.2.1",
     "chart.js": "^2.8.0",
     "clsx": "^1.0.4",
+    "file-saver": "^2.0.2",
     "formik": "^2.1.5",
     "history": "^4.9.0",
     "lodash": "latest",
@@ -41,6 +42,7 @@
     "underscore": "^1.9.1",
     "uuid": "^3.3.2",
     "validate.js": "^0.13.1",
+    "xlsx": "^0.16.6",
     "yup": "^0.29.3"
   },
   "devDependencies": {

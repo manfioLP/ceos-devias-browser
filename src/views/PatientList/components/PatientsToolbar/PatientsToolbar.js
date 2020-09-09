@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
 
 import { SearchInput } from 'components';
+
+import { PatientContext } from "../../../../contexts/Patient";
+import CeosButton from "../../../../components/CeosButton";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -31,6 +34,9 @@ const useStyles = makeStyles(theme => ({
 const PatientsToolbar = props => {
   const { className, ...rest } = props;
 
+  const { exportPatients } = useContext(PatientContext);
+  console.log('exportPatients...', exportPatients);
+
   const classes = useStyles();
 
   return (
@@ -41,7 +47,21 @@ const PatientsToolbar = props => {
       <div className={classes.row}>
         <span className={classes.spacer} />
         <Button className={classes.importButton}>Importar [NOT WORKING]</Button>
-        <Button className={classes.exportButton}>Exportar [NOT WORKING]</Button>
+        <Button className={classes.exportButton} onCLick={()=> {
+          console.log('clicou!!!')
+          exportPatients();
+        }}>Exportar [NOT WORKING]</Button>
+        <CeosButton
+          label={'EXPORTAR'}
+          variant="contained"
+          // className={classes.buttonSuccess}
+          type={'submit'}
+          onClick={(event) => {
+            console.log('event...', event)
+            console.log('clicou!')
+            exportPatients();
+          }}
+        />
         <Button
           color="primary"
           variant="contained"
