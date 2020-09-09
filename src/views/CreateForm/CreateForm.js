@@ -30,10 +30,22 @@ const CreateForm = (props) => {
 
   const classes = useStyles();
 
-  // const {patient} = props
   const {patientState} = useContext(PatientContext);
   const [patient, setPatient] = patientState;
   const { history } = props;
+
+  useEffect(()=> {
+    console.log('props no create form...', props)
+    if (props.patient && props.patient._id) {
+      window.alert('Paciente ainda ta no estado!!!')
+    } else {
+      console.log('Paciente resetado!!!');
+      setPatient({identifier: null});
+    }
+  }, [])
+
+  // const {patient} = props
+
 
   return (
     <div className={classes.root}>
