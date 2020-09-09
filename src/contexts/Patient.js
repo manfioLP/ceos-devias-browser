@@ -76,7 +76,7 @@ export const PatientProvider = props => {
     }
 
     // TODO: change route to a new one that returns all patients populated with fractures
-    const res = await fetch(`${serverEndpoint}/patient?limit=${10}&page=${0}`, {
+    const res = await fetch(`${serverEndpoint}/patient/export`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
