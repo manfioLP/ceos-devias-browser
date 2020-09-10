@@ -42,11 +42,11 @@ const handleSubmit = (values, {props}) => {
       antibioticAtEmergency: values.antibiotic,
       comorbidities: values.comorbidities,
       otherComorbidities: values.otherComorbidities,
-      profession: values.professionOther ? values.professionOther : formatOtherName(values.profession, 'PROFESSION'),
+      profession: values.professionOther ? formatOtherName(values.professionOther, 'PROFESSION') : values.profession,
       gender: values.gender.length,
-      city: values.cityOther ? values.cityOther : formatOtherName(values.city, 'CITY'),
+      city: values.cityOther ? formatOtherName(values.cityOther, 'CITY') : values.cityOther,
       education: values.education,
-      civilStatus: values.civilStatusOther ? values.civilStatusOther : formatOtherName(values.civilStatus, 'CIVIL'),
+      civilStatus: values.civilStatusOther ? formatOtherName(values.civilStatusOther, 'CIVIL') : values.civilStatusOther,
       hospitalizationAverageTime: values.hospitalizationAverageTime,
       admissionDate: values.date,
       date: dateForIdentifier,
@@ -57,7 +57,7 @@ const handleSubmit = (values, {props}) => {
       admissionHourCategory: values.admissionHourCategory,
       exposureTimeCategory: values.exposureTimeCategory,
       associatedTraumaInjury: values.traumas,
-      associatedTraumaInjuryOther: values.associatedTraumaInjury ? formatOtherName(values.associatedTraumaInjury, 'TRAUMA') : null,
+      associatedTraumaInjuryOther: values.associatedTraumaInjuryOther ? formatOtherName(values.associatedTraumaInjuryOther, 'TRAUMA') : null,
       associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null
     })
   }
