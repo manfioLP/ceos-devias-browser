@@ -105,7 +105,6 @@ const PatientForm = props => {
   }, [traumas]);
 
   const [boolState, setBoolState] = React.useState({
-    educationCompleted: false,
     diabetes: false,
     smoker: false,
     ethylista: false,
@@ -418,6 +417,7 @@ const PatientForm = props => {
                 value={values.education}
                 label="Escolaridade"
                 handleChange={handleChange}
+                required
               />
             </Grid>
             <Grid item xs={2}>

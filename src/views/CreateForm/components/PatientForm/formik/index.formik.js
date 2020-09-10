@@ -7,6 +7,22 @@ import propsToValuesMap from './propsMap'
 
 // const weekdays = ['Domingo', 'Segunda', 'Terça ', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
 
+const formatOtherName = (name, variable) => {
+  switch (variable) {
+    case 'CITY':
+      return `(8) Outro -${name}`
+    case 'PROFESSION':
+      return `(9) Outro -${name}`
+    case 'CIVIL':
+      return `(8) Outro -${name}`
+    case 'TRAUMA':
+      return `(8) Outro - ${name}`
+    case 'CLOSED_FRACTURE':
+      return `(2) Fratura Fechada - ${name}`
+    default:
+      return `(X) - ${name}`
+  }
+}
 
 const handleSubmit = (values, {props}) => {
   if (props.patient.identifier) {
@@ -26,11 +42,11 @@ const handleSubmit = (values, {props}) => {
       antibioticAtEmergency: values.antibiotic,
       comorbidities: values.comorbidities,
       otherComorbidities: values.otherComorbidities,
-      profession: values.professionOther ? values.professionOther : values.profession,
+      profession: values.professionOther ? values.professionOther : formatOtherName(values.profession, 'PROFESSION'),
       gender: values.gender.length,
-      city: values.cityOther ? values.cityOther : values.city,
-      education: values.degreeLevel,
-      civilStatus: values.civilStatusOther ? values.civilStatusOther : values.civilStatus,
+      city: values.cityOther ? values.cityOther : formatOtherName(values.city, 'CITY'),
+      education: values.education,
+      civilStatus: values.civilStatusOther ? values.civilStatusOther : formatOtherName(values.civilStatus, 'CIVIL'),
       hospitalizationAverageTime: values.hospitalizationAverageTime,
       admissionDate: values.date,
       date: dateForIdentifier,
@@ -41,8 +57,8 @@ const handleSubmit = (values, {props}) => {
       admissionHourCategory: values.admissionHourCategory,
       exposureTimeCategory: values.exposureTimeCategory,
       associatedTraumaInjury: values.traumas,
-      associatedTraumaInjuryOther: values.associatedTraumaInjury,
-      associatedClosedFractureDescription: values.associatedClosedFractureDescription
+      associatedTraumaInjuryOther: values.associatedTraumaInjury ? formatOtherName(values.associatedTraumaInjury, 'TRAUMA') : null,
+      associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null
     })
   }
 }
