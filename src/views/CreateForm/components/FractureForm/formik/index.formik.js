@@ -5,8 +5,26 @@ import ValidationFracture from './validator'
 
 import propsToValuesMap from './propsMap'
 
-// todo: add use of context
-
+const formatOtherName = (name, variable) => {
+  switch (variable) {
+    case 'VASCULAR':
+      return `(2) Lesões vasculares -${name}`
+    case 'NERVOUS':
+      return `(3) Lesão de nervos periférico -${name}`
+    case 'TRAUMA':
+      return `(8) Outro -${name}`
+    case 'BONE':
+      return `(19) Outro - ${name}`
+    case 'LIMB':
+      return `(3) Outro - ${name}`
+    case 'MECHANISM':
+      return `(15) Outro - ${name}`
+    case 'SURGICAL':
+      return `(4) Outro - ${name}`
+    default:
+      return `(X) - ${name}`
+  }
+}
 
 const handleSubmit = (values, { props }) => {
   console.log('formik values...', values);
@@ -16,20 +34,20 @@ const handleSubmit = (values, { props }) => {
     patient: props.patient._id,
     recordNumber: props.patient.recordNumber,
     ao: values.ao,
-    bone: values.boneOther ? values.boneOther : values.bone,
+    bone: values.boneOther ? formatOtherName(values.boneOther, 'BONE') : values.bone,
     description: values.description,
-    firstSurgicalApproach: values.firstSurgicalApproachOther ? values.firstSurgicalApproachOther : values.firstSurgicalApproach,
+    firstSurgicalApproach: values.firstSurgicalApproachOther ? formatOtherName(values.firstSurgicalApproachOther, 'SURGICAL') : values.firstSurgicalApproach,
     gustillo: values.gustillo,
-    limb: values.limbOther ? values.limbOther : values.limb,
-    mechanism: values.mechanismOther ? values.mechanismOther : values.mechanism,
+    limb: values.limbOther ? formatOtherName(values.limbOther, 'LIMB') : values.limb,
+    mechanism: values.mechanismOther ? formatOtherName(values.mechanismOther, 'MECHANISM') : values.mechanism,
     region: values.region,
     amputation: values.amputation,
     infection: values.infection,
     associatedFractureTraumaInjury: values.traumas,
-    associatedFractureTraumaInjuryOther: values.associatedFractureTraumaInjuryOther,
-    nervousTraumaDescription: values.nervousTraumaDescription,
+    associatedFractureTraumaInjuryOther: values.associatedFractureTraumaInjuryOther ? formatOtherName(values.associatedFractureTraumaInjuryOther, 'TRAUMA') : null,
+    nervousTraumaDescription: values.nervousTraumaDescription ? formatOtherName(values.nervousTraumaDescription, 'NERVOUS'): null,
     instrument: values.instrument,
-    vascularTraumaDescription: values.vascularTraumaDescription,
+    vascularTraumaDescription: values.vascularTraumaDescription ? formatOtherName(values.vascularTraumaDescription, 'VASCULAR') : null,
   }
   const newRows = [...props.rows];
   newRows[props.selectedId] = fracture;
