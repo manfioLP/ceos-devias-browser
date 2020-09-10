@@ -35,7 +35,6 @@ const useStyles = makeStyles(theme => ({
 const FracturesToolbar = props => {
   const { className, ...rest } = props;
 
-  // todo: add fracture context provider to app root
   const { exportPatients } = useContext(PatientContext);
 
   const classes = useStyles();
