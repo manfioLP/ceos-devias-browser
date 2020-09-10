@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
 
 import { SearchInput } from 'components';
+
+import { FractureContext } from "../../../../contexts/Fracture";
+import CeosButton from "../../../../components/CeosButton";
+import {PatientContext} from "../../../../contexts/Patient";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -31,6 +35,9 @@ const useStyles = makeStyles(theme => ({
 const FracturesToolbar = props => {
   const { className, ...rest } = props;
 
+  // todo: add fracture context provider to app root
+  const { exportPatients } = useContext(PatientContext);
+
   const classes = useStyles();
 
   return (
@@ -42,17 +49,28 @@ const FracturesToolbar = props => {
         <span className={classes.spacer} />
         <Button className={classes.importButton}>Importar [NOT WORKING]</Button>
         <Button className={classes.exportButton}>Exportar [NOT WORKING]</Button>
+        <CeosButton
+          label={'EXPORTAR'}
+          variant="contained"
+          // className={classes.buttonSuccess}
+          type={'submit'}
+          onClick={(event) => {
+            console.log('event...', event)
+            console.log('clicou!')
+            exportFractures();
+          }}
+        />
         <Button
           color="primary"
           variant="contained"
         >
-          Adicionar paciente
+          Adicionar fratura
         </Button>
       </div>
       <div className={classes.row}>
         <SearchInput
           className={classes.searchInput}
-          placeholder="Procurar paciente"
+          placeholder="Procurar fratura"
         />
       </div>
     </div>
