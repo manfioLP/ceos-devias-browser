@@ -167,6 +167,7 @@ const PatientForm = props => {
                 required
                 value={values.date}
                 onChange={date => handleDatePickerChange(date, 'date')}
+                onlydate
               />
             </Grid>
             <Grid item xs={2}>

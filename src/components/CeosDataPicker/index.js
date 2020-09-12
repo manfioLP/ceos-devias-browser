@@ -61,7 +61,10 @@ export default function CeosDatePicker(props) {
 
   function renderLabel(date) {
     if (moment(date).isValid()) {
-      return moment(date).format(format || 'DD/MM/YYYY HH:mm')
+      if (onlydate)
+        return moment(date).format(format || 'DD/MM/YYYY')
+      else
+        return moment(date).format(format || 'DD/MM/YYYY HH:mm')
     }
     return ''
   }
