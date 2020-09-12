@@ -9,6 +9,7 @@ export const PatientProvider = props => {
   const serverEndpoint = `${corsAnywhere}/https://0xoc2xlzck.execute-api.us-east-1.amazonaws.com/dev`
 
   const [patient, setPatient] = useState({identifier: null})
+  const [patientsCount, setPatientsCount] = useState(null)
 
   const addPatient = async patient => {
     const res = await fetch(`${serverEndpoint}/patient`, {
@@ -98,12 +99,38 @@ export const PatientProvider = props => {
       })
   }
 
+  const countPatients = async () => {
+    const res = await fetch(`${serverEndpoint}/patient/count`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }),
+    });
+
+    res
+      .json()
+      .then( res => {
+        if (res.err) {
+          console.log('NAO ATUALIZOU A CONTAGEM DOS PACIENTES NO DASHBOARD')
+        } else {
+          console.log('BUSCOU A CONTAGEM DE FRATURAS DE BOAS')
+          setPatientsCount(res);
+        }
+      })
+    .catch(err => {
+      console.log('[ERROR DE FETCHING] fetching err...', err)
+    })
+  }
+
   return (
     <PatientContext.Provider value={{
       patientState: [patient, setPatient],
+      patientsCount: [patientsCount, setPatientsCount],
       addPatient,
       getPatients,
       exportPatients,
+      countPatients
     }}>
       {props.children}
     </PatientContext.Provider>

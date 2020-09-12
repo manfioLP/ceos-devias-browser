@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+
+import { PatientContext } from "../../../../contexts/Patient";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,6 +47,12 @@ const TotalPatients = props => {
 
   const classes = useStyles();
 
+  const { patientsCount, countPatients } = useContext(PatientContext);
+
+  useEffect(() => {
+    countPatients()
+  }, [])
+
   return (
     <Card
       {...rest}
@@ -64,7 +72,7 @@ const TotalPatients = props => {
             >
               Pacientes
             </Typography>
-            <Typography variant="h3">1,600</Typography>
+            <Typography variant="h3">{patientsCount}</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>

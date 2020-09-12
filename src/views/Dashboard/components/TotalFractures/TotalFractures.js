@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MoneyIcon from '@material-ui/icons/Money';
+
+import { FractureContext } from "../../../../contexts/Fracture";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,6 +47,12 @@ const TotalFractures = props => {
 
   const classes = useStyles();
 
+  const { fracturesCount, countFractures } = useContext(FractureContext);
+
+  useEffect(() => {
+    countFractures();
+  }, [])
+
   return (
     <Card
       {...rest}
@@ -64,7 +72,7 @@ const TotalFractures = props => {
             >
               Fraturas
             </Typography>
-            <Typography variant="h3">732</Typography>
+            <Typography variant="h3">{fracturesCount}</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>

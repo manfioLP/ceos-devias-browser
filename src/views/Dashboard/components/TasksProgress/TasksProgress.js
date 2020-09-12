@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -12,6 +12,8 @@ import {
 } from '@material-ui/core';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
 import ArrowUpwardIcon from "@material-ui/core/SvgIcon/SvgIcon";
+
+import { PatientContext } from "../../../../contexts/Patient";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,6 +46,8 @@ const TasksProgress = props => {
 
   const classes = useStyles();
 
+  const { patientsCount, countPatients } = useContext(PatientContext);
+
   return (
     <Card
       {...rest}
@@ -63,7 +67,7 @@ const TasksProgress = props => {
             >
               Progresso da Pesquisa
             </Typography>
-            <Typography variant="h3">75.5%</Typography>
+          <Typography variant="h3">{patientsCount && `${(patientsCount/500).toFixed(2)}%`}</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
@@ -81,7 +85,7 @@ const TasksProgress = props => {
         </div>
         <LinearProgress
           className={classes.progress}
-          value={75.5}
+          value={15}
           variant="determinate"
         />
       </CardContent>

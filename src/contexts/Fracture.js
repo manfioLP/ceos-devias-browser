@@ -13,6 +13,7 @@ export const FractureProvider = props => {
     ]);
 
   const [selectedId, setSelectedId] = useState(null);
+  const [fracturesCount, setFracturesCount] = useState(null)
 
   const addFracture = async (fracture, newRows, setRows) => {
     const res = await fetch(`${serverEndpoint}/fracture`, {
@@ -98,9 +99,38 @@ export const FractureProvider = props => {
       })
   }
 
+  const countFractures = async () => {
+    const res = await fetch(`${serverEndpoint}/fracture/count`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }),
+    });
+
+    res
+      .json()
+      .then( res => {
+        if (res.err) {
+          console.log('NAO ATUALIZOU A CONTAGEM DAS FRATURAS NO DASHBOARD')
+        } else {
+          console.log('BUSCOU A CONTAGEM DE FRATURAS DE BOAS')
+          setFracturesCount(res)
+        }
+      })
+      .catch(err => {
+        console.log('[ERROR DE FETCHING] fetching err...', err)
+      })
+  }
+
 
   return (
-    <FractureContext.Provider value={{contextRows: [rows, setRows], selected: [selectedId, setSelectedId], addFracture, getFractures, exportFractures}}>
+    <FractureContext.Provider value={
+      {
+        contextRows: [rows, setRows],
+        selected: [selectedId, setSelectedId],
+        fracturesCount: [fracturesCount, setFracturesCount],
+        addFracture, getFractures, exportFractures, countFractures}}>
       {props.children}
     </FractureContext.Provider>
   )
