@@ -111,7 +111,8 @@ const PatientForm = props => {
     infection: false,
     death: false,
     comorbidities: false,
-    has: false
+    has: false,
+    drugs: false
   });
 
   const handleSwitchChange = (name, switchValue) => {
@@ -249,18 +250,18 @@ const PatientForm = props => {
                 toShow={'hour'}
                 // onblur={handleBur}
                 value={values.hour}
-                label="Horário de admissão"
+                label="Horário do Trauma"
                 onChange={setFieldValue}
               />
             </Grid>
             <Grid item xs={2}>
               <CeosSelectInput
-                id="admissionHourCategory"
-                name="admissionHourCategory"
-                toShow={'admissionHourCategory'}
+                id="traumaHourCategory"
+                name="traumaHourCategory"
+                toShow={'traumaHourCategory'}
                 // onblur={handleBur}
-                value={values.admissionHourCategory}
-                label="Categorizar Horário de admissão"
+                value={values.traumaHourCategory}
+                label="Categorizar Horário do Trauma"
                 handleChange={handleChange}
               />
             </Grid>
@@ -420,6 +421,26 @@ const PatientForm = props => {
                 required
               />
             </Grid>
+            <Grid item xs={3}>
+            <CeosSelectInput
+                id="admissionTimeCCCategory"
+                name="admissionTimeCCCategory"
+                toShow={'admissionTimeCCCategory'}
+                value={values.admissionTimeCCCategory}
+                label="Categorizar Tempo Admissão"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosInput 
+                id="admissionTimeCC"
+                name="admissionTimeCC"
+                toshow="admissionTimeCC"
+                value={values.admissionTimeCC}
+                label="Tempo Admissão-CC"
+                onChange={setFieldValue}
+              />
+            </Grid>
             <Grid item xs={2}>
               <CeosInput
                 id="hospitalizationAverageTime"
@@ -526,6 +547,21 @@ const PatientForm = props => {
                   />
                 }
                 label="Fumante"
+              />
+            </Grid>
+            <Grid item xs={2} className={classes.checkboxView}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checkedIcon={<CheckCircleIcon style={{ fontSize: 20 }} />}
+                    style={{ margin: 0 }}
+                    name="smoker"
+                    onChange={event => handleSwitchChange('drugs', event.target.checked)}
+                    checked={ boolState.drugs }
+                    color="primary"
+                  />
+                }
+                label="Uso de Drogas"
               />
             </Grid>
             <Grid item xs={2} className={classes.checkboxView}>

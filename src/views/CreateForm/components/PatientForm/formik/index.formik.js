@@ -32,11 +32,13 @@ const handleSubmit = (values, {props}) => {
     console.log('values no formik...', values);
     // const weekday = weekdays[values.date.day()]
     const dateForIdentifier = values.date.date()
+    let parsedTraumas = '';
+    values.traumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
     props.addPatient({
       recordNumber: values.recordNumber,
       name: values.name,
       age: values.age,
-      admissionHour: values.hour,
+      traumaHour: values.hour,
       time: values.time,
       exposureTime: values.exposureTime, // check
       antibioticAtEmergency: values.antibiotic,
@@ -51,12 +53,15 @@ const handleSubmit = (values, {props}) => {
       admissionDate: values.date,
       date: dateForIdentifier,
       death: values.death,
+      drugs: values.drugs,
       weekday: values.weekday,
       month: values.month,
       ageCategory: values.ageCategory,
-      admissionHourCategory: values.admissionHourCategory,
+      traumaHourCategory: values.traumaHourCategory,
       exposureTimeCategory: values.exposureTimeCategory,
-      associatedTraumaInjury: values.traumas,
+      admissionHourCCCategory: values.admissionHourCCCategory,
+      admissionHourCC: values.admissionHourCC,
+      associatedTraumaInjury: parsedTraumas,
       associatedTraumaInjuryOther: values.associatedTraumaInjuryOther ? formatOtherName(values.associatedTraumaInjuryOther, 'TRAUMA') : null,
       associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null
     })

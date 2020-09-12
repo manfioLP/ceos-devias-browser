@@ -360,9 +360,9 @@ const FractureForm = props => {
           </Grid>
           <Grid item xs={2}>
             <CeosInput
-              id="associatedTraumaInjuryOther"
-              name="associatedTraumaInjuryOther"
-              toshow="associatedTraumaInjuryOther"
+              id="associatedFractureTraumaInjuryOther"
+              name="associatedFractureTraumaInjuryOther"
+              toshow="associatedFractureTraumaInjuryOther"
               value={showTraumaInjuryOther ? values.associatedFractureTraumaInjuryOther ? values.associatedFractureTraumaInjuryOther : '' : null}
               label="Outro"
               handleChange={handleChange}

@@ -30,6 +30,8 @@ const handleSubmit = (values, { props }) => {
   console.log('formik values...', values);
   console.log('props', props);
   console.log(props.patient._id)
+  let parsedTraumas = '';
+  values.traumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
   const fracture = {
     patient: props.patient._id,
     recordNumber: props.patient.recordNumber,
@@ -43,7 +45,7 @@ const handleSubmit = (values, { props }) => {
     region: values.region,
     amputation: values.amputation,
     infection: values.infection,
-    associatedFractureTraumaInjury: values.traumas,
+    associatedFractureTraumaInjury: parsedTraumas,
     associatedFractureTraumaInjuryOther: values.associatedFractureTraumaInjuryOther ? formatOtherName(values.associatedFractureTraumaInjuryOther, 'TRAUMA') : null,
     nervousTraumaDescription: values.nervousTraumaDescription ? formatOtherName(values.nervousTraumaDescription, 'NERVOUS'): null,
     instrument: values.instrument,

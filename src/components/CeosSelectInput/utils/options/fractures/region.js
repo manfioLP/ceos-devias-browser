@@ -47,4 +47,8 @@ export default [
     opt: 12,
     value: 'Escápula'
   },
+  {
+    opt: 13,
+    value: 'Cotovelo'
+  },
 ]

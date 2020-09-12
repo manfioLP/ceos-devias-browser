@@ -16,9 +16,10 @@ import education from './patients/education'
 import profession from './patients/profession'
 import civilStatus from './patients/civilStatus'
 import ageCategory from './patients/ageCategory'
+import traumaHourCategory from './patients/traumaHourCategory'
 import exposureTimeCategory from './patients/exposureTimeCategory'
-import admissionHourCategory from './patients/admissionHourCategory'
 import associatedTraumaInjury from './patients/associatedTraumaInjury'
+import admissionTimeCCCategory from './patients/admissionTimeCCCategory'
 
 export default {
   ao,
@@ -39,7 +40,8 @@ export default {
   profession,
   civilStatus,
   ageCategory,
+  traumaHourCategory,
   exposureTimeCategory,
-  admissionHourCategory,
   associatedTraumaInjury,
+  admissionTimeCCCategory
 }

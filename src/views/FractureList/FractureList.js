@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/styles';
 
 import { FracturesToolbar, FracturesTable } from './components';
 import mockData from './data';
-import { FractureContext } from "../../contexts/Fracture";
 
 const useStyles = makeStyles(theme => ({
   root: {

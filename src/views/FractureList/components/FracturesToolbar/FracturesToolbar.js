@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 const FracturesToolbar = props => {
   const { className, ...rest } = props;
 
-  const { exportFractures } = useContext(PatientContext);
+  const { exportFractures } = useContext(FractureContext);
 
   const classes = useStyles();
 
