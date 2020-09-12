@@ -42,6 +42,7 @@ const handleSubmit = (values, {props}) => {
       time: values.time,
       exposureTime: values.exposureTime, // check
       antibioticAtEmergency: values.antibiotic,
+      antibioticAtEmergencyOther: values.antibioticOther,
       comorbidities: values.comorbidities,
       otherComorbidities: values.otherComorbidities,
       profession: values.professionOther ? formatOtherName(values.professionOther, 'PROFESSION') : values.profession,

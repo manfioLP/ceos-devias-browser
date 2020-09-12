@@ -13,6 +13,7 @@ import month from './patients/month'
 import gender from './patients/gender'
 import weekday from './patients/weekday'
 import education from './patients/education'
+import antibiotic from './patients/antibiotic'
 import profession from './patients/profession'
 import civilStatus from './patients/civilStatus'
 import ageCategory from './patients/ageCategory'
@@ -37,6 +38,7 @@ export default {
   gender,
   weekday,
   education,
+  antibiotic,
   profession,
   civilStatus,
   ageCategory,

@@ -56,10 +56,20 @@ const PatientForm = props => {
 
   const [traumas, setTraumas] = useState([]);
   const [showCityOther, setShowCityOther] = useState(false);
+  const [showAntibioticOther, setShowAntibioticOther] = useState(false);
   const [showCivilStatusOther, setShowCivilStatusOther] = useState(false);
   const [showProfessionOther, setShowProfessionOther] = useState(false);
   const [showAssociatedTraumaInjuryOther, setShowAssociatedTraumaInjuryOther] = useState(false);
   const [showClosedFractureDescription, setShowClosedFractureDescription] = useState(Boolean(values.associatedClosedFractureDescription));
+
+  useEffect( () => {
+    const compareString = values.antibiotic ? values.antibiotic.slice(4, values.antibiotic.length) : ''
+    if (compareString === 'Outro') {
+      setShowAntibioticOther(true)
+    } else {
+      setShowAntibioticOther(false)
+    }
+  }, [values.antibiotic]);
 
   useEffect( () => {
     const compareString = values.city ? values.city.slice(4, values.city.length) : ''
@@ -452,14 +462,25 @@ const PatientForm = props => {
                 onChange={setFieldValue}
               />
             </Grid>
-            <Grid item xs={3}>
-              <CeosInput
+            <Grid item xs={2}>
+              <CeosSelectInput
                 id="antibiotic"
                 name="antibiotic"
-                toShow={'antibiotic'}
+                toShow="antibiotic"
                 value={values.antibiotic}
+                label="Antibiotico"
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CeosInput
+                id="antibioticOther"
+                name="antibioticOther"
+                toShow={'antibioticOther'}
+                value={showAntibioticOther ? `${values.showAntibioticOther ? values.associatedTraumaInjuryOther : ''}` : null}
                 onChange={setFieldValue}
-                label="Antibiótico na Emergência"
+                label="Antibiótico (Outro)"
+                disabled={!showAntibioticOther}
               />
             </Grid>
             <Grid item xs={2} className={classes.checkboxView}>
