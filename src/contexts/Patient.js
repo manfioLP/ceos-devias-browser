@@ -26,6 +26,8 @@ export const PatientProvider = props => {
       .then(res => {
         if (res.err) {
           window.alert(`Nao foi possivel criar o pacient \n Motivo: ${res.err.message}`)
+        } else if (res.status === 502 || res.message) {
+          window.alert(`Problemas internos do servidor, por favor tente novamente \n [from server: ${res.message}]`);
         } else {
           window.alert('Paciente criado com sucesso!')
           console.log(res)
@@ -36,6 +38,32 @@ export const PatientProvider = props => {
         window.alert('ERROR DE FETCHING')
         console.log('fetching err...', err)
       })
+  }
+
+  const getPatientById = async (id) => {
+    const res = await fetch(`${serverEndpoint}/patient/${id}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      })
+    });
+
+    res
+    .json()
+    .then(res => {
+      if (res.err) {
+        window.alert(`Nao foi buscar o paciente :( \n Motivo: ${res.err.message}`)
+      } else {
+        console.log('patient...', res)
+        window.alert('paciente buscado com sucesso!')
+        setPatient(res)
+      }
+    })
+  }
+
+  const GetPatient = async () => {
+
   }
 
   const getPatients = async (page, limit, setPatients) => {
@@ -130,7 +158,8 @@ export const PatientProvider = props => {
       addPatient,
       getPatients,
       exportPatients,
-      countPatients
+      countPatients,
+      getPatientById
     }}>
       {props.children}
     </PatientContext.Provider>

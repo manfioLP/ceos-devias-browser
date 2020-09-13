@@ -83,6 +83,12 @@ const Routes = () => {
         path="/register"
       />
       <RouteWithLayout
+        component={RegisterView}
+        exact
+        layout={MainLayout}
+        path="/register/:id"
+      />
+      <RouteWithLayout
         component={CreateFractureView}
         exact
         layout={MainLayout}
