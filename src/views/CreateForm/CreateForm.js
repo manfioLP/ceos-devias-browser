@@ -11,7 +11,7 @@ import { PatientForm, FractureRegister } from './components'
 import PatientRegister from "./components/PatientRegister/PatientRegister";
 import {makeStyles} from "@material-ui/styles";
 
-import { FractureProvider } from "../../contexts/Fracture";
+import {FractureContext, FractureProvider} from "../../contexts/Fracture";
 import { PatientContext } from "../../contexts/Patient";
 
 import CeosButton from "../../components/CeosButton";
@@ -32,6 +32,8 @@ const CreateForm = (props) => {
   const classes = useStyles();
 
   const {patientState, getPatientById} = useContext(PatientContext);
+  const { contextRows} = useContext(FractureContext);
+  const [rows, setRows] = contextRows;
   const [patient, setPatient] = patientState;
   const { history } = props;
   const { id } = props.match.params;
@@ -43,6 +45,7 @@ const CreateForm = (props) => {
     } else {
       console.log('Paciente resetado!!!');
       setPatient({identifier: null});
+      setRows([]);
     }
   }, [])
 
