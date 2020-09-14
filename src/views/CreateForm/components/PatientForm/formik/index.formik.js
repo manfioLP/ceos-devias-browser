@@ -30,10 +30,16 @@ const handleSubmit = (values, {props}) => {
   } else {
     console.log('formik props on submit...', props);
     console.log('values no formik...', values);
-    // const weekday = weekdays[values.date.day()]
     const dateForIdentifier = values.date.date()
-    let parsedTraumas = '';
-    values.traumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
+
+    const valuesTraumas = [...values.traumas];
+    const valuesComplications = [...values.complications];
+
+    let parsedTraumas = valuesTraumas.shift();
+    let parsedComplications = valuesComplications.shift();
+
+    valuesTraumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
+    valuesComplications.forEach(compl => parsedComplications+= `, ${compl}`);
     props.addPatient({
       recordNumber: values.recordNumber,
       name: values.name,
@@ -65,7 +71,8 @@ const handleSubmit = (values, {props}) => {
       associatedTraumaInjury: parsedTraumas,
       race: values.race,
       associatedTraumaInjuryOther: values.associatedTraumaInjuryOther ? formatOtherName(values.associatedTraumaInjuryOther, 'TRAUMA') : null,
-      associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null
+      associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null,
+      complications: parsedComplications
     })
   }
 }

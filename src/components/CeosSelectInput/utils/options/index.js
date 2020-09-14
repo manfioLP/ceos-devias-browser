@@ -17,6 +17,7 @@ import antibiotic from './patients/antibiotic'
 import profession from './patients/profession'
 import civilStatus from './patients/civilStatus'
 import ageCategory from './patients/ageCategory'
+import complications from './patients/complications'
 import traumaHourCategory from './patients/traumaHourCategory'
 import exposureTimeCategory from './patients/exposureTimeCategory'
 import associatedTraumaInjury from './patients/associatedTraumaInjury'
@@ -42,6 +43,7 @@ export default {
   profession,
   civilStatus,
   ageCategory,
+  complications,
   traumaHourCategory,
   exposureTimeCategory,
   associatedTraumaInjury,

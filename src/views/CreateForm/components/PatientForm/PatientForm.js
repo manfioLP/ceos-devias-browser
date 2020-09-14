@@ -56,6 +56,7 @@ const PatientForm = props => {
   const classes = useStyles();
 
   const [traumas, setTraumas] = useState([]);
+  const [complications, setComplications] = useState([]);
   const [showCityOther, setShowCityOther] = useState(false);
   const [showAntibioticOther, setShowAntibioticOther] = useState(false);
   const [showCivilStatusOther, setShowCivilStatusOther] = useState(false);
@@ -159,6 +160,12 @@ const PatientForm = props => {
     console.log('event...', event.target.value)
     setTraumas(event.target.value);
     values.traumas = event.target.value;
+  };
+
+  const handleChangeComplications = (event) => {
+    console.log('event...', event.target.value)
+    setComplications(event.target.value);
+    values.complications = event.target.value;
   };
 
   const options = getOptionsToDisplay('associatedTraumaInjury');
@@ -318,8 +325,6 @@ const PatientForm = props => {
                 id="professionOther"
                 name="professionOther"
                 toshow="professionOther"
-                value={values.profession}
-                label="Outro"
                 value={showProfessionOther ? `${values.professionOther ? values.professionOther : ''}` : null}
                 disabled={!showProfessionOther}
                 label="Outro"
@@ -341,11 +346,9 @@ const PatientForm = props => {
                 id="civilStatusOther"
                 name="civilStatusOther"
                 toshow="civilStatusOther"
-                value={values.civilStatus}
                 label="Outro"
                 value={showCivilStatusOther ? `${values.civilStatusOther ? values.civilStatusOther : ''}` : null}
                 disabled={!showCivilStatusOther}
-                label="Outro"
                 onChange={setFieldValue}
               />
             </Grid>
@@ -364,17 +367,14 @@ const PatientForm = props => {
                 id="cityOther"
                 name="cityOther"
                 toshow="cityOther"
-                value={values.city}
-                label="Outro"
                 value={showCityOther ? `${values.cityOther ? values.cityOther : ''}` : null}
                 disabled={!showCityOther}
-                onChange={setFieldValue}
                 label="Outro"
                 onChange={setFieldValue}
               />
             </Grid>
             <Grid item xs={2}>
-              <FormControl className={classes.formControl} style={{width: 300}}>
+              <FormControl style={{width: 300}}>
                 <InputLabel id="demo-mutiple-chip-label">Lesões associadas ao trauma</InputLabel>
                 <Select
                   labelId="demo-mutiple-chip-label"
@@ -489,6 +489,34 @@ const PatientForm = props => {
                 label="Antibiótico (Outro)"
                 disabled={!showAntibioticOther}
               />
+            </Grid>
+            <Grid item xs={3}>
+              <FormControl style={{width: 300}}>
+                <InputLabel id="complications-mutiple-chip-label">Complicações Dentro de um Mês</InputLabel>
+                <Select
+                  labelId="complications-mutiple-chip-label"
+                  id="complications-mutiple-chip"
+                  multiple
+                  value={complications}
+                  onChange={handleChangeComplications}
+                  input={<Input id="select-multiple-chip-complications" />}
+                  renderValue={(selected) => (
+                    <div>
+                      {selected.map((value) => {
+                        return (
+                          <Chip key={value} label={value} className={classes} />
+                        )})}
+                    </div>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {options.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={2} className={classes.checkboxView}>
               <FormControlLabel
