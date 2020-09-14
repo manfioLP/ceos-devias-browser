@@ -42,6 +42,7 @@ const PatientForm = props => {
   // todo: add other props
   // todo: add formik
   const {
+    setValues,
     className,
     values,
     handleChange,
@@ -61,6 +62,11 @@ const PatientForm = props => {
   const [showProfessionOther, setShowProfessionOther] = useState(false);
   const [showAssociatedTraumaInjuryOther, setShowAssociatedTraumaInjuryOther] = useState(false);
   const [showClosedFractureDescription, setShowClosedFractureDescription] = useState(Boolean(values.associatedClosedFractureDescription));
+
+  useEffect(() => {
+    console.log('setting field values...')
+    setValues({...patient})
+  }, [patient])
 
   useEffect( () => {
     const compareString = values.antibiotic ? values.antibiotic.slice(4, values.antibiotic.length) : ''

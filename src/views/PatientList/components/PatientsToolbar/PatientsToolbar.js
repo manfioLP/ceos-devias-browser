@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PatientsToolbar = props => {
-  const { className, ...rest } = props;
+  const { className, history, ...rest } = props;
 
   const { exportPatients } = useContext(PatientContext);
   console.log('exportPatients...', exportPatients);
@@ -47,10 +47,6 @@ const PatientsToolbar = props => {
       <div className={classes.row}>
         <span className={classes.spacer} />
         <Button className={classes.importButton}>Importar [NOT WORKING]</Button>
-        <Button className={classes.exportButton} onCLick={()=> {
-          console.log('clicou!!!')
-          exportPatients();
-        }}>Exportar [NOT WORKING]</Button>
         <CeosButton
           label={'EXPORTAR'}
           variant="contained"
@@ -65,6 +61,7 @@ const PatientsToolbar = props => {
         <Button
           color="primary"
           variant="contained"
+          onClick={() => history.push('/register')}
         >
           Adicionar paciente
         </Button>

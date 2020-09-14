@@ -15,17 +15,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const PatientList = () => {
+const PatientList = (props) => {
   const classes = useStyles();
 
   const [patients] = useState(mockData);
+  const { history } = props;
 
+  console.log('list props', props)
+  console.log(history)
   console.log('patients', patients)
   return (
     <div className={classes.root}>
-      <PatientsToolbar />
+      <PatientsToolbar history={history}/>
       <div className={classes.content}>
-        <PatientsTable patients={patients} />
+        <PatientsTable history={history} />
       </div>
     </div>
   );

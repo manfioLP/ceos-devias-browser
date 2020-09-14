@@ -49,12 +49,13 @@ const CreateForm = (props) => {
     }
   }, [])
 
+  console.log('patient id from match params...', id)
   useEffect(() => {
     if (_.isNil(patient.identifier) && !_.isNil(id)) {
       getPatientById(id)
       // get fractures
     }
-  }, [id])
+  }, [id, patient])
 
 
   return (

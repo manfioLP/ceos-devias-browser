@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PatientsTable = props => {
-  const { className, ...rest } = props;
+  const { className, history, ...rest } = props;
 
   const {getPatients} = useContext(PatientContext);
 
@@ -139,6 +139,10 @@ const PatientsTable = props => {
                     hover
                     key={patient.id}
                     selected={selectedPatients.indexOf(patient.id) !== -1}
+                    onDoubleClick={() => {
+                      console.log(patient)
+                      history.push(`/register/${patient._id}`)
+                    }}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -187,7 +191,6 @@ const PatientsTable = props => {
 
 PatientsTable.propTypes = {
   className: PropTypes.string,
-  patients: PropTypes.array.isRequired
 };
 
 export default PatientsTable;
