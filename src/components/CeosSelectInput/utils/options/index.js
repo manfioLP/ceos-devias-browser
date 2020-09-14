@@ -18,6 +18,7 @@ import profession from './patients/profession'
 import civilStatus from './patients/civilStatus'
 import ageCategory from './patients/ageCategory'
 import complications from './patients/complications'
+import fracturesNumber from "./patients/fracturesNumber";
 import traumaHourCategory from './patients/traumaHourCategory'
 import exposureTimeCategory from './patients/exposureTimeCategory'
 import associatedTraumaInjury from './patients/associatedTraumaInjury'
@@ -44,6 +45,7 @@ export default {
   civilStatus,
   ageCategory,
   complications,
+  fracturesNumber,
   traumaHourCategory,
   exposureTimeCategory,
   associatedTraumaInjury,

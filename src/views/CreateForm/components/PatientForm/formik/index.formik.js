@@ -64,15 +64,16 @@ const handleSubmit = (values, {props}) => {
       weekday: values.weekday,
       month: values.month,
       ageCategory: values.ageCategory,
-      traumaHourCategory: values.traumaHourCategory,
+      traumaHourCategory: values.admissionTimeCCCategory,
       exposureTimeCategory: values.exposureTimeCategory,
       admissionHourCCCategory: values.admissionHourCCCategory,
-      admissionHourCC: values.admissionHourCC,
+      admissionHourCC: values.admissionTimeCC,
       associatedTraumaInjury: parsedTraumas,
       race: values.race,
       associatedTraumaInjuryOther: values.associatedTraumaInjuryOther ? formatOtherName(values.associatedTraumaInjuryOther, 'TRAUMA') : null,
       associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null,
-      complications: parsedComplications
+      complications: parsedComplications,
+      fracturesNumber: values.fracturesNumber,
     })
   }
 }

@@ -518,6 +518,16 @@ const PatientForm = props => {
                 </Select>
               </FormControl>
             </Grid>
+            <Grid item xs={3}>
+              <CeosSelectInput
+                id="fracturesNumber"
+                name="fracturesNumber"
+                toShow="fracturesNumber"
+                value={values.fracturesNumber}
+                label="Numero de Fraturas"
+                handleChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={2} className={classes.checkboxView}>
               <FormControlLabel
                 control={
