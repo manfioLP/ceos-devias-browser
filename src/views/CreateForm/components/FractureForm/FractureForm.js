@@ -388,7 +388,7 @@ const FractureForm = props => {
               name="vascularTraumaDescription"
               toshow="vascularTraumaDescription"
               value={showVascularTrauma ? values.vascularTraumaDescription ? values.vascularTraumaDescription : '' : null}
-              label="Descricao lesao nervosa"
+              label="Descricao lesao vascular"
               handleChange={handleChange}
               disabled={!showVascularTrauma}
               onChange={setFieldValue}
