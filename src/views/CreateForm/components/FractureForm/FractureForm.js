@@ -49,6 +49,7 @@ const FractureForm = props => {
   const classes = useStyles();
 
   const {selected, contextRows} = useContext(FractureContext);
+  const [complications, setComplications] = useState([]);
 // const [selectedId, setSelectedId] = useState(null);
   const [selectedId, setSelectedId] = selected;
   // const [rows, setRows] = useState([]);
@@ -144,7 +145,14 @@ const FractureForm = props => {
     values.traumas = event.target.value;
   };
 
+  const handleChangeComplications = (event) => {
+    console.log('event...', event.target.value)
+    setComplications(event.target.value);
+    values.complications = event.target.value;
+  };
+
   const options = getOptionsToDisplay('associatedFractureTraumaInjury');
+  const complicationOptions = getOptionsToDisplay('complications');
 
   return (
     <Paper>
@@ -393,6 +401,34 @@ const FractureForm = props => {
               disabled={!showVascularTrauma}
               onChange={setFieldValue}
             />
+          </Grid>
+          <Grid item xs={6}>
+            <FormControl style={{width: 300}}>
+              <InputLabel id="complications-mutiple-chip-label">Complicações Dentro de um Mês</InputLabel>
+              <Select
+                labelId="complications-mutiple-chip-label"
+                id="complications-mutiple-chip"
+                multiple
+                value={complications}
+                onChange={handleChangeComplications}
+                input={<Input id="select-multiple-chip-complications" />}
+                renderValue={(selected) => (
+                  <div>
+                    {selected.map((value) => {
+                      return (
+                        <Chip key={value} label={value} className={classes} />
+                      )})}
+                  </div>
+                )}
+                MenuProps={MenuProps}
+              >
+                {complicationOptions.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <CeosButton
             variant="contained"

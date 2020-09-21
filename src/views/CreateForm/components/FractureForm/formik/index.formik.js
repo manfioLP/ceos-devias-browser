@@ -30,6 +30,11 @@ const handleSubmit = (values, { props }) => {
   console.log('formik values...', values);
   console.log('props', props);
   console.log(props.patient._id)
+
+  const valuesComplications = [...values.complications];
+  let parsedComplications = valuesComplications.shift();
+  valuesComplications.forEach(compl => parsedComplications+= `, ${compl}`);
+
   let parsedTraumas = '';
   values.traumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
   const fracture = {
@@ -50,6 +55,7 @@ const handleSubmit = (values, { props }) => {
     nervousTraumaDescription: values.nervousTraumaDescription ? formatOtherName(values.nervousTraumaDescription, 'NERVOUS'): null,
     instrument: values.instrument,
     vascularTraumaDescription: values.vascularTraumaDescription ? formatOtherName(values.vascularTraumaDescription, 'VASCULAR') : null,
+    complications: parsedComplications,
   }
   const newRows = [...props.rows];
   newRows[props.selectedId] = fracture;

@@ -1,7 +1,7 @@
 export default [
   {
     opt: 1,
-    value: 'Não'
+    value: 'Ausência'
   },
   {
     opt: 2,
@@ -21,6 +21,10 @@ export default [
   },
   {
     opt: 6,
-    value: 'Não Compareceu Mais ao Serviço'
+    value: 'Resolução de infecção ocorrida dentro de 2 semanas do trauma'
+  },
+  {
+    opt: 7,
+    value: 'Não compareceu mais ao serviço'
   }
   ]

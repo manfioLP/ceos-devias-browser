@@ -25,56 +25,59 @@ const formatOtherName = (name, variable) => {
 }
 
 const handleSubmit = (values, {props}) => {
+  console.log('formik props on submit...', props);
+  console.log('values no formik...', values);
+  const dateForIdentifier = values.date.date()
+
+  const valuesTraumas = [...values.traumas];
+
+  let parsedTraumas = valuesTraumas.shift();
+
+  valuesTraumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
+  const patientValuesObject = {
+    recordNumber: values.recordNumber,
+    name: values.name,
+    age: values.age,
+    traumaHour: values.hour,
+    time: values.time,
+    exposureTime: values.exposureTime, // check
+    antibioticAtEmergency: values.antibiotic,
+    antibioticAtEmergencyOther: values.antibioticOther,
+    comorbidities: values.comorbidities,
+    otherComorbidities: values.otherComorbidities,
+    profession: values.professionOther ? formatOtherName(values.professionOther, 'PROFESSION') : values.profession,
+    gender: values.gender,
+    city: values.cityOther ? formatOtherName(values.cityOther, 'CITY') : values.city,
+    education: values.education,
+    civilStatus: values.civilStatusOther ? formatOtherName(values.civilStatusOther, 'CIVIL') : values.civilStatus,
+    hospitalizationAverageTime: values.hospitalizationAverageTime,
+    admissionDate: values.date,
+    date: dateForIdentifier,
+    death: values.death,
+    drugs: values.drugs,
+    ethylista: values.ethylista,
+    smoker: values.smoker,
+    diabetes: values.diabetes,
+    has: values.has,
+    weekday: values.weekday,
+    month: values.month,
+    ageCategory: values.ageCategory,
+    traumaHourCategory: values.traumaHourCategory,
+    exposureTimeCategory: values.exposureTimeCategory,
+    admissionHourCCCategory: values.admissionHourCCCategory,
+    admissionHourCC: values.admissionTimeCC,
+    associatedTraumaInjury: parsedTraumas,
+    race: values.race,
+    associatedTraumaInjuryOther: values.associatedTraumaInjuryOther ? formatOtherName(values.associatedTraumaInjuryOther, 'TRAUMA') : null,
+    associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null,
+    fracturesNumber: values.fracturesNumber,
+  };
+
   if (props.patient.identifier) {
     window.alert('[NOT IMPLEMENTED] Should perform update! \n mas como ainda nao foi implementado, espera rs')
+    // props.updatePatient(patientValuesObject);
   } else {
-    console.log('formik props on submit...', props);
-    console.log('values no formik...', values);
-    const dateForIdentifier = values.date.date()
-
-    const valuesTraumas = [...values.traumas];
-    const valuesComplications = [...values.complications];
-
-    let parsedTraumas = valuesTraumas.shift();
-    let parsedComplications = valuesComplications.shift();
-
-    valuesTraumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
-    valuesComplications.forEach(compl => parsedComplications+= `, ${compl}`);
-    props.addPatient({
-      recordNumber: values.recordNumber,
-      name: values.name,
-      age: values.age,
-      traumaHour: values.hour,
-      time: values.time,
-      exposureTime: values.exposureTime, // check
-      antibioticAtEmergency: values.antibiotic,
-      antibioticAtEmergencyOther: values.antibioticOther,
-      comorbidities: values.comorbidities,
-      otherComorbidities: values.otherComorbidities,
-      profession: values.professionOther ? formatOtherName(values.professionOther, 'PROFESSION') : values.profession,
-      gender: values.gender,
-      city: values.cityOther ? formatOtherName(values.cityOther, 'CITY') : values.city,
-      education: values.education,
-      civilStatus: values.civilStatusOther ? formatOtherName(values.civilStatusOther, 'CIVIL') : values.civilStatus,
-      hospitalizationAverageTime: values.hospitalizationAverageTime,
-      admissionDate: values.date,
-      date: dateForIdentifier,
-      death: values.death,
-      drugs: values.drugs,
-      weekday: values.weekday,
-      month: values.month,
-      ageCategory: values.ageCategory,
-      traumaHourCategory: values.admissionTimeCCCategory,
-      exposureTimeCategory: values.exposureTimeCategory,
-      admissionHourCCCategory: values.admissionHourCCCategory,
-      admissionHourCC: values.admissionTimeCC,
-      associatedTraumaInjury: parsedTraumas,
-      race: values.race,
-      associatedTraumaInjuryOther: values.associatedTraumaInjuryOther ? formatOtherName(values.associatedTraumaInjuryOther, 'TRAUMA') : null,
-      associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null,
-      complications: parsedComplications,
-      fracturesNumber: values.fracturesNumber,
-    })
+    props.addPatient(patientValuesObject)
   }
 }
 

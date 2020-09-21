@@ -36,7 +36,7 @@ export default [
     value: 'Não sabe ler ou escrever'
   },
   {
-    opt: 8,
+    opt: 10,
     value: 'Superior completo'
   },
   {

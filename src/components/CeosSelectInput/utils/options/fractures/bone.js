@@ -64,10 +64,6 @@ export default [
     value: 'Ossos do carpo'
   },
   {
-    opt: 17,
-    value: 'Metacarpo'
-  },
-  {
     opt: 18,
     value: 'Falanges da mão'
   },
