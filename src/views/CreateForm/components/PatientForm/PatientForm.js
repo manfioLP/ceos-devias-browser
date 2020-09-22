@@ -39,8 +39,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PatientForm = props => {
-  // todo: add other props
-  // todo: add formik
   const {
     setValues,
     className,
@@ -50,6 +48,7 @@ const PatientForm = props => {
     handleSubmit,
     patient,
     addPatient,
+    updatePatient,
     ...rest } = props;
   const { history } = props;
 
@@ -63,9 +62,35 @@ const PatientForm = props => {
   const [showAssociatedTraumaInjuryOther, setShowAssociatedTraumaInjuryOther] = useState(false);
   const [showClosedFractureDescription, setShowClosedFractureDescription] = useState(Boolean(values.associatedClosedFractureDescription));
 
+
+  const parseTraumasToArray = (traumas) => {
+    const arr = [];
+    const traumaSplit = traumas.split(', ')
+    traumaSplit.forEach(tr => {
+      arr.push(tr);
+    })
+    return arr;
+  }
+
   useEffect(() => {
     console.log('setting field values...')
+    if (patient.identifier) {
+      setTraumas(parseTraumasToArray(patient.associatedTraumaInjury))
+      setBoolState({
+        diabetes: patient.diabetes,
+        smoker: patient.smoker,
+        ethylista: patient.ethylista,
+        death: patient.death,
+        comorbidities: patient.comorbidities,
+        has: patient.has,
+        drugs: patient.drugs
+      })
+
+      console.log('traumas...', traumas)
+      console.log('parsed traumas...', parseTraumasToArray(patient.associatedTraumaInjury))
+    }
     setValues({...patient})
+
   }, [patient])
 
   useEffect( () => {

@@ -28,12 +28,8 @@ const handleSubmit = (values, {props}) => {
   console.log('formik props on submit...', props);
   console.log('values no formik...', values);
   const dateForIdentifier = values.date.date()
+  console.log('data...',values.date.date())
 
-  const valuesTraumas = [...values.traumas];
-
-  let parsedTraumas = valuesTraumas.shift();
-
-  valuesTraumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
   const patientValuesObject = {
     recordNumber: values.recordNumber,
     name: values.name,
@@ -66,7 +62,7 @@ const handleSubmit = (values, {props}) => {
     exposureTimeCategory: values.exposureTimeCategory,
     admissionHourCCCategory: values.admissionHourCCCategory,
     admissionHourCC: values.admissionTimeCC,
-    associatedTraumaInjury: parsedTraumas,
+    // associatedTraumaInjury: parsedTraumas,
     race: values.race,
     associatedTraumaInjuryOther: values.associatedTraumaInjuryOther ? formatOtherName(values.associatedTraumaInjuryOther, 'TRAUMA') : null,
     associatedClosedFractureDescription: values.associatedClosedFractureDescription ? formatOtherName(values.associatedClosedFractureDescription, 'CLOSED_FRACTURE') : null,
@@ -74,9 +70,15 @@ const handleSubmit = (values, {props}) => {
   };
 
   if (props.patient.identifier) {
-    window.alert('[NOT IMPLEMENTED] Should perform update! \n mas como ainda nao foi implementado, espera rs')
-    // props.updatePatient(patientValuesObject);
+    patientValuesObject.associatedTraumaInjury = props.patient.associatedTraumaInjury
+    props.updatePatient(patientValuesObject, props.patient.identifier);
   } else {
+    const valuesTraumas = [...values.traumas];
+
+    let parsedTraumas = valuesTraumas.shift();
+
+    valuesTraumas.forEach(trauma => parsedTraumas+= `, ${trauma}`);
+    patientValuesObject.associatedTraumaInjury = parsedTraumas
     props.addPatient(patientValuesObject)
   }
 }

@@ -27,7 +27,7 @@ const classes = {
 const PatientRegister = (props) => {
 
   // todo: retrieve info from props here
-  const {patientState, addPatient} = useContext(PatientContext)
+  const {patientState, addPatient, updatePatient} = useContext(PatientContext)
   const [patient, setPatient] = patientState;
 
 
@@ -38,6 +38,7 @@ const PatientRegister = (props) => {
           {...props}
           patient={patient}
           addPatient={addPatient}
+          updatePatient={updatePatient}
         />
 
       </Paper>

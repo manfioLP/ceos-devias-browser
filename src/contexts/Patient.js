@@ -151,6 +151,40 @@ export const PatientProvider = props => {
     })
   }
 
+  const updatePatient = async (patientUpdate, identifier) => {
+    const identifierSplitted = identifier.split(' ')
+    const pathParamsIdentifier = identifierSplitted[0] + identifierSplitted[1];
+
+    const res = await fetch(`${serverEndpoint}/patient/${pathParamsIdentifier}`, {
+      method: 'PUT',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }),
+      body: JSON.stringify(patientUpdate)
+    });
+    console.log('identifier...', identifier)
+
+    res
+      .json()
+      .then(res => {
+        console.log('res...', res)
+        if (res.err) {
+          window.alert(`Nao foi possivel editar o paciente com os dados informados \n Motivo: ${res.err.message}`)
+        } else if (res.status === 502 || res.message) {
+          window.alert(`Problemas internos do servidor, por favor tente novamente \n [from server: ${res.message}]`);
+        } else {
+          window.alert('Paciente editado com sucesso!')
+          console.log(res)
+          setPatient(res);
+        }
+      })
+      .catch(err => {
+        window.alert('ERROR DE FETCHING')
+        console.log('fetching err...', err)
+      })
+  }
+
   return (
     <PatientContext.Provider value={{
       patientState: [patient, setPatient],
@@ -159,7 +193,8 @@ export const PatientProvider = props => {
       getPatients,
       exportPatients,
       countPatients,
-      getPatientById
+      getPatientById,
+      updatePatient,
     }}>
       {props.children}
     </PatientContext.Provider>
