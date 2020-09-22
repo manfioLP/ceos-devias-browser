@@ -457,20 +457,20 @@ const PatientForm = props => {
             </Grid>
             <Grid item xs={3}>
             <CeosSelectInput
-                id="admissionTimeCCCategory"
-                name="admissionTimeCCCategory"
-                toShow={'admissionTimeCCCategory'}
-                value={values.admissionTimeCCCategory}
+                id="admissionHourCCCategory"
+                name="admissionHourCCCategory"
+                toShow={'admissionHourCCCategory'}
+                value={values.admissionHourCCCategory}
                 label="Categorizar Tempo Admissão"
                 handleChange={handleChange}
               />
             </Grid>
             <Grid item xs={3}>
               <CeosInput 
-                id="admissionTimeCC"
-                name="admissionTimeCC"
-                toshow="admissionTimeCC"
-                value={values.admissionTimeCC}
+                id="admissionHourCC"
+                name="admissionHourCC"
+                toshow="admissionHourCC"
+                value={values.admissionHourCC}
                 label="Tempo Admissão-CC"
                 onChange={setFieldValue}
               />

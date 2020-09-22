@@ -61,7 +61,7 @@ const handleSubmit = (values, {props}) => {
     traumaHourCategory: values.traumaHourCategory,
     exposureTimeCategory: values.exposureTimeCategory,
     admissionHourCCCategory: values.admissionHourCCCategory,
-    admissionHourCC: values.admissionTimeCC,
+    admissionHourCC: values.admissionHourCC,
     // associatedTraumaInjury: parsedTraumas,
     race: values.race,
     associatedTraumaInjuryOther: values.associatedTraumaInjuryOther ? formatOtherName(values.associatedTraumaInjuryOther, 'TRAUMA') : null,
