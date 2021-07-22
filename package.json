@@ -42,7 +42,7 @@
     "underscore": "^1.9.1",
     "uuid": "^3.3.2",
     "validate.js": "^0.13.1",
-    "xlsx": "^0.16.6",
+    "xlsx": "^0.17.0",
     "yup": "^0.29.3"
   },
   "devDependencies": {
